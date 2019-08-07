@@ -18,13 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         loadClasses()
         
-        let navigationBarAppearace = UINavigationBar.appearance()
-        
-        navigationBarAppearace.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        navigationBarAppearace.barTintColor = #colorLiteral(red: 1, green: 0.6235294118, blue: 0.03921568627, alpha: 1)
-        
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        navigationBarAppearace.titleTextAttributes = textAttributes
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font:
+            UIFont(name: "Helvetica-Bold", size: 17.0)!,
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray] as [NSAttributedString.Key: Any]
         return true
     }
 

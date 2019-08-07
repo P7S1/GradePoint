@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 class Course : Codable{
    var name = "No name"
    var grade = "A"

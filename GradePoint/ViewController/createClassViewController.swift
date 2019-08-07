@@ -7,7 +7,6 @@
 //
 import StoreKit
 import UIKit
-import CoreData
 class createClassViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var gradePicker: UIPickerView!
     @IBOutlet weak var classTextFieldContent: UITextField!
@@ -34,6 +33,11 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         classTextFieldContent.delegate = self
         styleView()
         // Do any additional setup after loading the view.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
     }
     //TODO: PICKER VIEW CODE
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -127,7 +131,7 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         }
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 16
+        return count <= 18
     }
     func styleView(){
         createButton.layer.cornerRadius = 10
@@ -172,5 +176,16 @@ extension createClassViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
