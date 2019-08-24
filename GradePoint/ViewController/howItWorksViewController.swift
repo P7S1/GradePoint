@@ -7,26 +7,40 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class howItWorksViewController: UIViewController,UICollectionViewDataSource,UIScrollViewDelegate,UICollectionViewDelegate {
     @IBOutlet weak var cardOutlet: UICollectionView!
+    
+    @IBOutlet weak var bannerView: GADBannerView!
     
     @IBOutlet weak var exitButton: UIButton!
     var cards : [howItWorksCard] = [howItWorksCard]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
-   
+        
+        bannerView.adUnitID = "ca-app-pub-7404153809143887/2785430968"
+        //vca-app-pub-7404153809143887/2785430968
+        bannerView.rootViewController = self
+        NotificationCenter.default.addObserver(self, selector: #selector(unDimScreen), name:NSNotification.Name(rawValue: "unDimScreen"), object: nil)
+        
        cardOutlet.dataSource = self
         cardOutlet.delegate = self
         initCards()
         
         // Do any additional setup after loading the view.
     }
-    func initCards(){
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        exitButton.layer.cornerRadius = 10
-        exitButton.clipsToBounds = true
+    }
+     @objc func unDimScreen(){
+        UIView.animate(withDuration: 0.2) {
+            self.view.alpha = 1
+        }
+    }
+    func initCards(){
         
         let c1 = howItWorksCard()
         //red
@@ -40,7 +54,7 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
         
         let c3 = howItWorksCard()
         //blue
-        c3.initCard(i: UIImage(named: "c3")!, c: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.7).cgColor, t: "This app works by totaling up all the corresponding values for each letter grade, then dividing that sum by the total number of credits ")
+        c3.initCard(i: UIImage(named: "c3")!, c: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.7).cgColor, t: "This app works by totaling all the corresponding values for each letter grade, then dividing that by the total number of credits ")
         cards.append(c3)
         //purple
         let c4 = howItWorksCard()
@@ -52,12 +66,8 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
         cards.append(c5)
         //pink
         let c6 = howItWorksCard()
-        c6.initCard(i: UIImage(named: "c6")!, c: UIColor(red: 1, green: 45/255, blue: 85/255, alpha: 0.7).cgColor, t: "Weights make corresponding letter values will be higher than the standard.For example, an A in a standard weight class is 4.0 but an A in a Honors class is 4.5")
+        c6.initCard(i: UIImage(named: "c6")!, c: UIColor(red: 1, green: 45/255, blue: 85/255, alpha: 0.7).cgColor, t: "Weights make corresponding letter values  higher than the standard. For example, an A in a standard weight class is 4.0 but an A in a Honors class is 4.5")
         cards.append(c6)
-    }
-    
-    @IBAction func exitPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cards.count

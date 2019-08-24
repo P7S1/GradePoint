@@ -11,20 +11,10 @@ import UIKit
 class aboutViewController: UIViewController {
 
     @IBOutlet weak var textOutlet: UITextView!
-    @IBOutlet weak var navItem: UINavigationItem!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rightButtonItem = UIBarButtonItem.init(
-            title: "Done",
-            style: .done,
-            target: self,
-            action: #selector(exitPressed(_:))
-        )
-        rightButtonItem.tintColor = #colorLiteral(red: 1, green: 0.662745098, blue: 0.07843137255, alpha: 1)
-        
-        self.navItem.title = "About"
-        self.navItem.rightBarButtonItem = rightButtonItem
+            self.navigationItem.title = "About"
         
         let titleAttributes = [NSAttributedString.Key.font:
             UIFont(name: "Helvetica-Bold", size: 34.0)!,
@@ -40,10 +30,10 @@ class aboutViewController: UIViewController {
         var title : [String] = [String]()
         
         title.append("\nAbout\n")
-        body.append("Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake!Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.\n")
+        body.append("GradePoint is an ad supported iOS app created by me, a 17 year old iOS developer. I created this app to explore the world of computer science, and hopefully inspire others to do the same. I also wanted to solve a problem many students faced, which was calcualting GPA and remembering when assignments were due. GPA's are typally only released at the end of semesters and old fashioned planners aren't always with you and don't remind you in real time. With this app, the end of the semester is a little less stressful and a student no longer has to utter the dreaded phrase: \("There was Homework Today??!!") \n")
         
         title.append("\nCredits\n")
-        body.append("test test test test test Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake! Obtuse, rubber goose, green moose, guava juice. Giant snake, birthday cake, large fries, chocolate shake!Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.\n")
+        body.append("Graduation cap icon made by “Freepik” from www.flaticon.com \n \n Share icon created by  SmashIcons from www.flaticon.com \n \n Menu icon created by Eleonor Wang from www.flaticon.com. \n")
         
         let output = NSMutableAttributedString()
         

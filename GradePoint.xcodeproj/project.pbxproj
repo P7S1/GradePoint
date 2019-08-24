@@ -3,53 +3,81 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86BD0A6685A963BCC1C3CB37 /* Pods_GradePoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2FBB7E34D933799C6F9612E /* Pods_GradePoint.framework */; };
 		DF21688222DBFCC900782083 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF21688122DBFCC900782083 /* AppDelegate.swift */; };
-		DF21688722DBFCC900782083 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF21688522DBFCC900782083 /* Main.storyboard */; settings = {ASSET_TAGS = (0, ); }; };
 		DF21688C22DBFCCA00782083 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF21688A22DBFCCA00782083 /* LaunchScreen.storyboard */; };
+		DF2584C1230DCC89009CFEE3 /* CourseWeights.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2584C0230DCC89009CFEE3 /* CourseWeights.swift */; };
+		DF2584C3230DE900009CFEE3 /* editWeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2584C2230DE900009CFEE3 /* editWeightViewController.swift */; };
+		DF2584C5230DF272009CFEE3 /* selectWeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2584C4230DF272009CFEE3 /* selectWeightViewController.swift */; };
 		DF5BC8AB22F8633A00E923A9 /* aboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BC8AA22F8633A00E923A9 /* aboutViewController.swift */; };
 		DF5BC8AF22FA803E00E923A9 /* notificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BC8AE22FA803E00E923A9 /* notificationsViewController.swift */; };
+		DF5BC8B122FA882900E923A9 /* customTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BC8B022FA882900E923A9 /* customTabBarViewController.swift */; };
+		DF5BC8B822FAB9C400E923A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5BC8B722FAB9C400E923A9 /* Main.storyboard */; settings = {ASSET_TAGS = (navController, ); }; };
+		DF5EB29C230657D200AAE64D /* NotificationPhrases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EB29B230657D200AAE64D /* NotificationPhrases.swift */; };
+		DF673A75230FA3F700B56134 /* supportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF673A74230FA3F700B56134 /* supportViewController.swift */; };
 		DF8AB25522F5346D00845B88 /* howItWorksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8AB25422F5346D00845B88 /* howItWorksViewController.swift */; };
 		DF8AB25722F53F6600845B88 /* howItWorksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8AB25622F53F6600845B88 /* howItWorksCollectionViewCell.swift */; };
 		DF8AB25922F5426B00845B88 /* howItWorksCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8AB25822F5426B00845B88 /* howItWorksCard.swift */; };
+		DF9C4C1F22FDCC5100079246 /* createReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C4C1E22FDCC5100079246 /* createReminderViewController.swift */; };
 		DF9F9C7522DCC3C20071AE73 /* addClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F9C7422DCC3C20071AE73 /* addClassViewController.swift */; };
 		DF9F9C7722DCC5260071AE73 /* createClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F9C7622DCC5260071AE73 /* createClassViewController.swift */; };
 		DF9F9C8022DD7C940071AE73 /* classesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F9C7F22DD7C940071AE73 /* classesTableViewCell.swift */; };
 		DFBA9C4B22E6D8C2007CCA67 /* settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA9C4A22E6D8C2007CCA67 /* settingsViewController.swift */; };
 		DFBA9C5122ED538E007CCA67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBA9C5022ED538E007CCA67 /* Assets.xcassets */; };
-		DFBA9C5322F26BA5007CCA67 /* SlideInTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA9C5222F26BA5007CCA67 /* SlideInTransition.swift */; };
-		DFBA9C5B22F2C927007CCA67 /* menuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA9C5A22F2C927007CCA67 /* menuItem.swift */; };
 		DFBA9C5D22F2CAE7007CCA67 /* menuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA9C5C22F2CAE7007CCA67 /* menuTableViewCell.swift */; };
+		DFD5F98D22FDB545009724A7 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD5F98C22FDB545009724A7 /* Reminder.swift */; };
+		DFD8489A22FFE1F400143D0B /* remindersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8489922FFE1F400143D0B /* remindersTableViewCell.swift */; };
+		DFD8489C22FFE21900143D0B /* headerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8489B22FFE21900143D0B /* headerViewCell.swift */; };
+		DFD848CB22FFF02C00143D0B /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DFD848C822FFF02C00143D0B /* ProgressHUD.bundle */; };
+		DFD848CC22FFF02C00143D0B /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD848C922FFF02C00143D0B /* ProgressHUD.m */; };
+		DFD848E22301414500143D0B /* bigCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD848E12301414500143D0B /* bigCalendarViewController.swift */; };
 		DFE131B822E2F3A30089B1DD /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE131B722E2F3A30089B1DD /* Course.swift */; };
 		DFFF2B0022F6C2CE00E9A27C /* privacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF2AFF22F6C2CE00E9A27C /* privacyPolicyViewController.swift */; };
 		DFFF2B0322F6C72500E9A27C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFFF2B0222F6C72500E9A27C /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		64FA3514C02A99A12DF50CAA /* Pods-GradePoint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GradePoint.debug.xcconfig"; path = "Target Support Files/Pods-GradePoint/Pods-GradePoint.debug.xcconfig"; sourceTree = "<group>"; };
+		A7EC6D4C459987643D13A01E /* Pods-GradePoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GradePoint.release.xcconfig"; path = "Target Support Files/Pods-GradePoint/Pods-GradePoint.release.xcconfig"; sourceTree = "<group>"; };
 		DF21687E22DBFCC900782083 /* GradePoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GradePoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF21688122DBFCC900782083 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DF21688622DBFCC900782083 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DF21688B22DBFCCA00782083 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF21688D22DBFCCA00782083 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF2584C0230DCC89009CFEE3 /* CourseWeights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseWeights.swift; sourceTree = "<group>"; };
+		DF2584C2230DE900009CFEE3 /* editWeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editWeightViewController.swift; sourceTree = "<group>"; };
+		DF2584C4230DF272009CFEE3 /* selectWeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectWeightViewController.swift; sourceTree = "<group>"; };
 		DF5BC8AA22F8633A00E923A9 /* aboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutViewController.swift; sourceTree = "<group>"; };
 		DF5BC8AE22FA803E00E923A9 /* notificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationsViewController.swift; sourceTree = "<group>"; };
+		DF5BC8B022FA882900E923A9 /* customTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customTabBarViewController.swift; sourceTree = "<group>"; };
+		DF5BC8B722FAB9C400E923A9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
+		DF5EB29B230657D200AAE64D /* NotificationPhrases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPhrases.swift; sourceTree = "<group>"; };
+		DF673A74230FA3F700B56134 /* supportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = supportViewController.swift; sourceTree = "<group>"; };
 		DF8AB25422F5346D00845B88 /* howItWorksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howItWorksViewController.swift; sourceTree = "<group>"; };
 		DF8AB25622F53F6600845B88 /* howItWorksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howItWorksCollectionViewCell.swift; sourceTree = "<group>"; };
 		DF8AB25822F5426B00845B88 /* howItWorksCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howItWorksCard.swift; sourceTree = "<group>"; };
+		DF9C4C1E22FDCC5100079246 /* createReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createReminderViewController.swift; sourceTree = "<group>"; };
 		DF9F9C7422DCC3C20071AE73 /* addClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addClassViewController.swift; sourceTree = "<group>"; };
 		DF9F9C7622DCC5260071AE73 /* createClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createClassViewController.swift; sourceTree = "<group>"; };
 		DF9F9C7F22DD7C940071AE73 /* classesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classesTableViewCell.swift; sourceTree = "<group>"; };
 		DFBA9C4A22E6D8C2007CCA67 /* settingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsViewController.swift; sourceTree = "<group>"; };
 		DFBA9C5022ED538E007CCA67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DFBA9C5222F26BA5007CCA67 /* SlideInTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInTransition.swift; sourceTree = "<group>"; };
-		DFBA9C5A22F2C927007CCA67 /* menuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuItem.swift; sourceTree = "<group>"; };
 		DFBA9C5C22F2CAE7007CCA67 /* menuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuTableViewCell.swift; sourceTree = "<group>"; };
+		DFD5F98C22FDB545009724A7 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		DFD8489922FFE1F400143D0B /* remindersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = remindersTableViewCell.swift; path = ../../../../.Trash/remindersTableViewCell.swift; sourceTree = "<group>"; };
+		DFD8489B22FFE21900143D0B /* headerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = headerViewCell.swift; path = ../../../../.Trash/headerViewCell.swift; sourceTree = "<group>"; };
+		DFD848C722FFF02C00143D0B /* GradePoint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GradePoint-Bridging-Header.h"; sourceTree = "<group>"; };
+		DFD848C822FFF02C00143D0B /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		DFD848C922FFF02C00143D0B /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		DFD848CA22FFF02C00143D0B /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		DFD848E12301414500143D0B /* bigCalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bigCalendarViewController.swift; sourceTree = "<group>"; };
 		DFE131B722E2F3A30089B1DD /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		DFFF2AFF22F6C2CE00E9A27C /* privacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = privacyPolicyViewController.swift; sourceTree = "<group>"; };
 		DFFF2B0222F6C72500E9A27C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		E2FBB7E34D933799C6F9612E /* Pods_GradePoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GradePoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,12 +86,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFFF2B0322F6C72500E9A27C /* WebKit.framework in Frameworks */,
+				86BD0A6685A963BCC1C3CB37 /* Pods_GradePoint.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C4B966BF6C1D3C123648C2F6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				64FA3514C02A99A12DF50CAA /* Pods-GradePoint.debug.xcconfig */,
+				A7EC6D4C459987643D13A01E /* Pods-GradePoint.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DF21687522DBFCC900782083 = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +109,7 @@
 				DFD1723322DEE458009D58F0 /* Supporting FIles */,
 				DF21687F22DBFCC900782083 /* Products */,
 				DFFF2B0122F6C72400E9A27C /* Frameworks */,
+				C4B966BF6C1D3C123648C2F6 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,11 +137,17 @@
 				DF21688122DBFCC900782083 /* AppDelegate.swift */,
 				DF9F9C7422DCC3C20071AE73 /* addClassViewController.swift */,
 				DF9F9C7622DCC5260071AE73 /* createClassViewController.swift */,
+				DF2584C2230DE900009CFEE3 /* editWeightViewController.swift */,
 				DFBA9C4A22E6D8C2007CCA67 /* settingsViewController.swift */,
 				DF8AB25422F5346D00845B88 /* howItWorksViewController.swift */,
 				DFFF2AFF22F6C2CE00E9A27C /* privacyPolicyViewController.swift */,
 				DF5BC8AA22F8633A00E923A9 /* aboutViewController.swift */,
 				DF5BC8AE22FA803E00E923A9 /* notificationsViewController.swift */,
+				DF5BC8B022FA882900E923A9 /* customTabBarViewController.swift */,
+				DF9C4C1E22FDCC5100079246 /* createReminderViewController.swift */,
+				DFD848E12301414500143D0B /* bigCalendarViewController.swift */,
+				DF2584C4230DF272009CFEE3 /* selectWeightViewController.swift */,
+				DF673A74230FA3F700B56134 /* supportViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -111,7 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				DF21688A22DBFCCA00782083 /* LaunchScreen.storyboard */,
-				DF21688522DBFCC900782083 /* Main.storyboard */,
+				DF5BC8B722FAB9C400E923A9 /* Main.storyboard */,
 				DFBA9C5022ED538E007CCA67 /* Assets.xcassets */,
 			);
 			path = View;
@@ -121,12 +166,15 @@
 			isa = PBXGroup;
 			children = (
 				DFE131B722E2F3A30089B1DD /* Course.swift */,
-				DFBA9C5222F26BA5007CCA67 /* SlideInTransition.swift */,
-				DFBA9C5A22F2C927007CCA67 /* menuItem.swift */,
+				DF2584C0230DCC89009CFEE3 /* CourseWeights.swift */,
 				DF9F9C7F22DD7C940071AE73 /* classesTableViewCell.swift */,
 				DFBA9C5C22F2CAE7007CCA67 /* menuTableViewCell.swift */,
 				DF8AB25622F53F6600845B88 /* howItWorksCollectionViewCell.swift */,
 				DF8AB25822F5426B00845B88 /* howItWorksCard.swift */,
+				DFD8489922FFE1F400143D0B /* remindersTableViewCell.swift */,
+				DFD5F98C22FDB545009724A7 /* Reminder.swift */,
+				DFD8489B22FFE21900143D0B /* headerViewCell.swift */,
+				DF5EB29B230657D200AAE64D /* NotificationPhrases.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -134,7 +182,11 @@
 		DFD1723322DEE458009D58F0 /* Supporting FIles */ = {
 			isa = PBXGroup;
 			children = (
+				DFD848C822FFF02C00143D0B /* ProgressHUD.bundle */,
+				DFD848CA22FFF02C00143D0B /* ProgressHUD.h */,
+				DFD848C922FFF02C00143D0B /* ProgressHUD.m */,
 				DF21688D22DBFCCA00782083 /* Info.plist */,
+				DFD848C722FFF02C00143D0B /* GradePoint-Bridging-Header.h */,
 			);
 			path = "Supporting FIles";
 			sourceTree = "<group>";
@@ -143,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				DFFF2B0222F6C72500E9A27C /* WebKit.framework */,
+				E2FBB7E34D933799C6F9612E /* Pods_GradePoint.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -154,9 +207,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DF21689022DBFCCA00782083 /* Build configuration list for PBXNativeTarget "GradePoint" */;
 			buildPhases = (
+				761707625C1CC9B438870D54 /* [CP] Check Pods Manifest.lock */,
 				DF21687A22DBFCC900782083 /* Sources */,
 				DF21687B22DBFCC900782083 /* Frameworks */,
 				DF21687C22DBFCC900782083 /* Resources */,
+				0E536A33ECC1D62DA4C14C70 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -176,6 +231,7 @@
 				KnownAssetTags = (
 					0,
 					1,
+					navController,
 				);
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
@@ -210,13 +266,56 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF5BC8B822FAB9C400E923A9 /* Main.storyboard in Resources */,
 				DF21688C22DBFCCA00782083 /* LaunchScreen.storyboard in Resources */,
+				DFD848CB22FFF02C00143D0B /* ProgressHUD.bundle in Resources */,
 				DFBA9C5122ED538E007CCA67 /* Assets.xcassets in Resources */,
-				DF21688722DBFCC900782083 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0E536A33ECC1D62DA4C14C70 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GradePoint/Pods-GradePoint-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GradePoint/Pods-GradePoint-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GradePoint/Pods-GradePoint-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		761707625C1CC9B438870D54 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GradePoint-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DF21687A22DBFCC900782083 /* Sources */ = {
@@ -224,19 +323,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFE131B822E2F3A30089B1DD /* Course.swift in Sources */,
+				DF2584C3230DE900009CFEE3 /* editWeightViewController.swift in Sources */,
 				DF8AB25522F5346D00845B88 /* howItWorksViewController.swift in Sources */,
+				DF5BC8B122FA882900E923A9 /* customTabBarViewController.swift in Sources */,
+				DF673A75230FA3F700B56134 /* supportViewController.swift in Sources */,
+				DF2584C5230DF272009CFEE3 /* selectWeightViewController.swift in Sources */,
+				DF5EB29C230657D200AAE64D /* NotificationPhrases.swift in Sources */,
 				DF8AB25922F5426B00845B88 /* howItWorksCard.swift in Sources */,
 				DF9F9C7522DCC3C20071AE73 /* addClassViewController.swift in Sources */,
+				DFD848CC22FFF02C00143D0B /* ProgressHUD.m in Sources */,
+				DFD848E22301414500143D0B /* bigCalendarViewController.swift in Sources */,
+				DF2584C1230DCC89009CFEE3 /* CourseWeights.swift in Sources */,
 				DF21688222DBFCC900782083 /* AppDelegate.swift in Sources */,
 				DF9F9C8022DD7C940071AE73 /* classesTableViewCell.swift in Sources */,
 				DF5BC8AF22FA803E00E923A9 /* notificationsViewController.swift in Sources */,
 				DFFF2B0022F6C2CE00E9A27C /* privacyPolicyViewController.swift in Sources */,
 				DF8AB25722F53F6600845B88 /* howItWorksCollectionViewCell.swift in Sources */,
 				DF9F9C7722DCC5260071AE73 /* createClassViewController.swift in Sources */,
-				DFBA9C5B22F2C927007CCA67 /* menuItem.swift in Sources */,
 				DF5BC8AB22F8633A00E923A9 /* aboutViewController.swift in Sources */,
-				DFBA9C5322F26BA5007CCA67 /* SlideInTransition.swift in Sources */,
+				DFD5F98D22FDB545009724A7 /* Reminder.swift in Sources */,
 				DFBA9C5D22F2CAE7007CCA67 /* menuTableViewCell.swift in Sources */,
+				DFD8489A22FFE1F400143D0B /* remindersTableViewCell.swift in Sources */,
+				DFD8489C22FFE21900143D0B /* headerViewCell.swift in Sources */,
+				DF9C4C1F22FDCC5100079246 /* createReminderViewController.swift in Sources */,
 				DFBA9C4B22E6D8C2007CCA67 /* settingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,14 +353,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DF21688522DBFCC900782083 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DF21688622DBFCC900782083 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DF21688A22DBFCCA00782083 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -381,18 +482,21 @@
 		};
 		DF21689122DBFCCA00782083 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64FA3514C02A99A12DF50CAA /* Pods-GradePoint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6P8ZRP65P6;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting FIles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.AtemnkengFontem.GradePoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Supporting FIles/GradePoint-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -401,18 +505,21 @@
 		};
 		DF21689222DBFCCA00782083 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7EC6D4C459987643D13A01E /* Pods-GradePoint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6P8ZRP65P6;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting FIles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.AtemnkengFontem.GradePoint;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Supporting FIles/GradePoint-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

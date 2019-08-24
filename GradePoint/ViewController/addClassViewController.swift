@@ -7,48 +7,55 @@
 //
 
 import UIKit
+import UserNotifications
+var weights : CourseWeights = CourseWeights()
 var classArray : [Course] = [Course]()
 var editingIndex = 0
 var userIsEditing = false
 var userTappedOut = false
-var globalGPA = 0.000
-var globalUnweightedGPA = 0.000
 let dataFilePath = FileManager.default.urls(for: .documentDirectory,in:.userDomainMask).first?.appendingPathComponent("Course.plist")
 
 
 class addClassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate{
     
+    var globalGPA = 0.000
+    var globalUnweightedGPA = 0.000
+    
+    @IBOutlet weak var isEmpty: UILabel!
     
     @IBOutlet weak var classOutlet: UITableView!
     
     @IBOutlet weak var gpaText: UILabel!
     @IBOutlet weak var unweightedGPAText: UILabel!
     
-    @IBOutlet weak var addClassButton: UIButton!
-    
-    let transition = SlideInTransition()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         super.viewWillAppear(true)
+        
         classOutlet.delegate = self
         classOutlet.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector( loadList), name:NSNotification.Name(rawValue: "load"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(presentHIW), name:NSNotification.Name(rawValue: "presentHIW"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(unDimScreen), name:NSNotification.Name(rawValue: "unDimScreen"), object: nil)
 
-       styleView()
+        
+        
        reloadData()
         
+                isEmpty.isHidden = classArray.count != 0
         
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
-        self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        if classArray.count == 0{
+        classOutlet.reloadData()
+        }
+        calculateGPA()
     }
     //TODO: Share functionality
     @IBAction func shareButton(_ sender: Any) {
-        let activityController = UIActivityViewController(activityItems: ["I got a weighted gpa of \(String(format: "%.3f", globalGPA)) and \(String(format: "%.3f", globalUnweightedGPA)) unweighted! I calculated it using the gpa app. Check it out here:"], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: ["I got a weighted gpa of \(String(format: "%.3f", globalGPA)) and \(String(format: "%.3f", globalUnweightedGPA)) unweighted! I calculated it using the gpa app. Check it out here: https://itunes.apple.com/us/app/gradepoint/id1477275391?ls=1&mt=8"], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
     }
     //TODO: ADD CLASS PRESSED
@@ -68,6 +75,18 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.class_Grade.textColor = classArray[indexPath.row].getGradeColor()
         cell.class_Weight.text = classArray[indexPath.row].weight
         cell.class_credit.text = "\(classArray[indexPath.row].credits) credits"
+        
+        if classArray[indexPath.row].exempt{
+           let attributedText = NSMutableAttributedString(string: classArray[indexPath.row].name)
+            attributedText.addAttributes([
+                NSAttributedString.Key.strikethroughStyle:NSUnderlineStyle.single.rawValue, NSAttributedString.Key.strikethroughColor:UIColor.black],
+                                         range: NSMakeRange(0, attributedText.length))
+            
+            cell.class_Name.attributedText = attributedText
+            
+            cell.class_Grade.text = "--"
+            cell.class_Grade.textColor = UIColor.lightGray
+        }
         
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         print("added to table")
@@ -101,11 +120,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             classOutlet.deleteRows(at: [indexPath], with: .automatic)
             calculateGPA()
         }
-        if editingStyle == .none {
-            userIsEditing = true
-            print("sending user to editing screen with index of \(editingIndex)")
-            performSegue(withIdentifier: "editScreen", sender: self)    
-        }
 } /*
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let swipeAction = UISwipeActionsConfiguration(actions: [])
@@ -114,38 +128,27 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     } */
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //EDIT
-        let edit = UIContextualAction(style:.normal, title: "Edit") { (action, view, completionHandler) in
+        let edit = UIContextualAction(style:.normal, title: nil) { (action, view, completionHandler) in
             print("User swiped to edit cell")
             userIsEditing = true
             editingIndex = indexPath.row
             print("sending user to editing screen with index of \(indexPath.row)")
             self.dimScreen()
-            self.performSegue(withIdentifier: "editScreen", sender: self)
             self.classOutlet.setEditing(false, animated: true)
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "createView") as! createClassViewController
+            vc.modalPresentationStyle = .overCurrentContext
+            self.present(vc, animated: true, completion: nil)
         }
         edit.backgroundColor = #colorLiteral(red: 1, green: 0.662745098, blue: 0.07843137255, alpha: 1)
         edit.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "edit")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
-        /* DELETE
-        let delete = UIContextualAction(style:.normal, title: "Delete") { (action, view, completionHandler) in
-            print("User deleted item")
-            self.self.classOutlet.beginUpdates()
-            self.classOutlet.deleteRows(at: [indexPath], with: .automatic)
-            classArray.remove(at:indexPath.row)
-            self.classOutlet.endUpdates()
-            self.calculateGPA()
-            self.classOutlet.setEditing(false, animated: true)
-        }
-        delete.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.1921568627, blue: 0.1490196078, alpha: 1)
-        delete.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
-            UIImage(named: "delete")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
-        }
-        */
         return UISwipeActionsConfiguration(actions: [edit])
     }
     //TODO: CALCULATE GPA
     func calculateGPA(){
+        isEmpty.isHidden = classArray.count != 0
         var points = 0.0
         var creditsSum = 0.0
         var unweightedPoints = 0.0
@@ -154,19 +157,30 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         let runtime = classArray.count-1
         if classArray.count > 0{
         for i in 0...runtime{
-            points = points +  (classArray[i].getValue() * classArray[i].credits)
+            if classArray[i].exempt{
+                print("\(classArray[i].name)class was exempt")
+            }else{
+            points = points +  (weights.getWeight(course: classArray[i]) * classArray[i].credits)
+           // points = points +  (classArray[i].getValue() * classArray[i].credits)
             let previousWeight = classArray[i].weight
             classArray[i].weight = "Regular"
-            unweightedPoints = unweightedPoints + (classArray[i].getValue() * classArray[i].credits)
+            unweightedPoints = unweightedPoints + (weights.getWeight(course: classArray[i]) * classArray[i].credits)
             creditsSum = creditsSum + classArray[i].credits
             classArray[i].weight = previousWeight
+            }
         }
         gpa = points / creditsSum
         unweightedGpa = unweightedPoints/creditsSum
+            
             globalGPA = gpa
             globalUnweightedGPA = unweightedGpa
             unweightedGPAText.text = "\(String(format: "%.3f", unweightedGpa)) Unweighted"
             gpaText.text = String(format: "%.3f", gpa)
+            
+            if gpa.isNaN && unweightedGpa.isNaN{
+                unweightedGPAText.text = "0.000 Unweighted"
+                gpaText.text = "0.000"
+            }
         }else{
             unweightedGPAText.text = "0.000 Unweighted"
             gpaText.text = "0.000"
@@ -178,15 +192,11 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         classOutlet.estimatedRowHeight = 200.0
         classOutlet.reloadData()
         classOutlet.separatorStyle = .none
+        
+        isEmpty.isHidden = classArray.count != 0
         calculateGPA()
     }
-    func styleView(){
-        addClassButton.layer.cornerRadius = 10
-        addClassButton.clipsToBounds = true
-        
-        
-    }
-    func unDimScreen(){
+    @objc func unDimScreen(){
         UIView.animate(withDuration: 0.2) {
             self.view.alpha = 1
         }
@@ -196,15 +206,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             self.view.alpha = 0.5
         }
         
-    }
-    @IBAction func didSelectMenu(_ sender: Any) {
- 
-        guard let settingsViewController = storyboard?.instantiateViewController(withIdentifier:"MenuViewController") else{
-            return
-        }
-        settingsViewController.modalPresentationStyle = .overCurrentContext
-        settingsViewController.transitioningDelegate = self
-        present(settingsViewController, animated:true)
     }
     @objc func loadList(notification: NSNotification){
         //load data here
@@ -234,38 +235,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
     }
-    
-    @objc func presentHIW(){
-        if(menuIndex == 0)
-        {
-        print("Menu index 2")
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "howItWorksView") as! howItWorksViewController
-        self.present(vc, animated: true, completion: nil)
-        }else if(menuIndex == 1){
-            print("MENU INDEX 1")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "privacyPolicyView") as! privacyPolicyViewController
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: true, completion: nil)
-        }
-        else{
-            print("Menu index 3")
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "aboutView") as! aboutViewController
-            vc.modalPresentationStyle = .overCurrentContext
-            self.present(vc, animated: true, completion: nil)
-            
-        }
-    }
 
 }
 
-extension addClassViewController: UIViewControllerTransitioningDelegate{
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresenting = true
-        return transition
-    }
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.isPresenting = false
-        return transition
-    }
-    
-}
+

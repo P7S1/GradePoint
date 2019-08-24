@@ -7,20 +7,25 @@
 //
 
 import UIKit
-import CoreData
+import UserNotifications
+
+import GoogleMobileAds
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+ 
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         loadClasses()
         
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font:
-            UIFont(name: "Helvetica-Bold", size: 17.0)!,
-            NSAttributedString.Key.foregroundColor: UIColor.darkGray] as [NSAttributedString.Key: Any]
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+
+        
+
         return true
     }
 
@@ -40,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
@@ -57,6 +63,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("error loading items \(error)")
             }
         }
+        
+        if let data =  try? Data(contentsOf: remindersDataFilePath!){
+            let decoder = PropertyListDecoder()
+            do{
+                try  reminders = decoder.decode([Reminder].self, from: data)
+            }
+            catch{
+                print("error loading items \(error)")
+            }
+        }
+        
+        if let data =  try? Data(contentsOf: completedDataFilePath!){
+            let decoder = PropertyListDecoder()
+            do{
+                try  completedReminderes = decoder.decode([Reminder].self, from: data)
+            }
+            catch{
+                print("error loading items \(error)")
+            }
+        }
+        
+        if let data =  try? Data(contentsOf: weightsDataFilePath!){
+            let decoder = PropertyListDecoder()
+            do{
+                try  weights = decoder.decode(CourseWeights.self, from: data)
+            }
+            catch{
+                print("error loading items \(error)")
+            }
+        }
     }
     
     func saveItems(){
@@ -64,8 +100,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do{
             let data = try encoder.encode(classArray)
             try data.write(to: dataFilePath!)
+            
         }catch{
             print("Error encoding class array \(error)")
+        }
+        
+        do{
+            let data = try encoder.encode(reminders)
+            try data.write(to: remindersDataFilePath!)
+            
+        }catch{
+            print("Error encoding class array \(error)")
+        }
+        
+        do{
+            let data = try encoder.encode(completedReminderes)
+            try data.write(to: completedDataFilePath!)
+            
+        }catch{
+            print("Error encoding class array \(error)")
+        }
+        
+        do{
+            let data = try encoder.encode(weights)
+            try data.write(to: weightsDataFilePath!)
+            
+        }catch{
+            print("Error encoding weights array \(error)")
+        }
+        if(reminders.count>0){
+        for i in 0...reminders.count-1{
+            if(reminders.count > 0){
+            scheduleLocal(remind: reminders[i])
+            }
+        }
+        }
+        
+    }
+    
+    func scheduleLocal(remind: Reminder){
+        if(remind.willNotify && !remind.completed){
+            let center = UNUserNotificationCenter.current()
+            let content = UNMutableNotificationContent()
+            content.title = NotificationPhrases().getPhrase()
+            if remind.course.name != Course().name && remind.course.name != "No class"{
+            content.body = "\(remind.name) for \(remind.course.name)"
+            }else{
+            content.body = remind.name
+            }
+            content.sound = .default
+
+            let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: remind.reminder)
+            
+            print(comps)
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
+            
+            
+            print(Date())
+            // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            print("Set reminder for \(remind.reminder)")
+            center.add(request)
+            print("notification added successfully")
         }
     }
 
