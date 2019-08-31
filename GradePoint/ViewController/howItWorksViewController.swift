@@ -24,6 +24,7 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
         //vca-app-pub-7404153809143887/2785430968
         bannerView.rootViewController = self
         NotificationCenter.default.addObserver(self, selector: #selector(unDimScreen), name:NSNotification.Name(rawValue: "unDimScreen"), object: nil)
+
         
        cardOutlet.dataSource = self
         cardOutlet.delegate = self

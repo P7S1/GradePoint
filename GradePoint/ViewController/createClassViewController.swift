@@ -25,7 +25,7 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     var selectedGrade = "A+"
     var selectedWeight = "Regular"
     let grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
-    let weights = ["Regular", "Honors", "AP", "IB SL", "IB HL"]
+    let weights = ["Regular", "Honors", "AP", "IB SL", "IB HL", "College"]
     let labelTexts = ["Grade", "Weight"]
     
     @IBOutlet weak var createView: UIView!
@@ -64,7 +64,6 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         view.addGestureRecognizer(tap)
         
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-7404153809143887/4170024190")
-        //ca-app-pub-7404153809143887/4126432796
         let request = GADRequest()
         interstitial.load(request)
         
@@ -210,7 +209,7 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     }
     func presentAd(){
         adCount = adCount + 1
-        if interstitial.isReady && adCount % 4 == 0{
+        if interstitial.isReady && adCount % 3 == 0{
             interstitial.present(fromRootViewController: self)
             print("ad was ready")
         } else {

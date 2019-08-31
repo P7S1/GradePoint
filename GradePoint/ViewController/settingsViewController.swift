@@ -37,6 +37,8 @@ class settingViewController : UITableViewController{
                 print("Delete Data")
                 deleteData()
             case 2:
+                let vc = (self.storyboard?.instantiateViewController(withIdentifier: "premiumVIewController") as! premiumViewController)
+                self.present(vc, animated: true, completion: nil)
                 print("Remove ads")
             default:
                 print("General section settings failure")

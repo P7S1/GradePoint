@@ -14,7 +14,7 @@ var editingIndex = 0
 var userIsEditing = false
 var userTappedOut = false
 let dataFilePath = FileManager.default.urls(for: .documentDirectory,in:.userDomainMask).first?.appendingPathComponent("Course.plist")
-
+let defaults = UserDefaults.standard
 
 class addClassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate{
     
@@ -164,7 +164,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
            // points = points +  (classArray[i].getValue() * classArray[i].credits)
             let previousWeight = classArray[i].weight
             classArray[i].weight = "Regular"
-            unweightedPoints = unweightedPoints + (weights.getWeight(course: classArray[i]) * classArray[i].credits)
+            unweightedPoints = unweightedPoints + (CourseWeights().getWeight(course: classArray[i]) * classArray[i].credits)
             creditsSum = creditsSum + classArray[i].credits
             classArray[i].weight = previousWeight
             }

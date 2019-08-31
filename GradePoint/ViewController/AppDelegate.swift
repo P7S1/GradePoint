@@ -68,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let decoder = PropertyListDecoder()
             do{
                 try  reminders = decoder.decode([Reminder].self, from: data)
+                
             }
             catch{
                 print("error loading items \(error)")
@@ -88,6 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let decoder = PropertyListDecoder()
             do{
                 try  weights = decoder.decode(CourseWeights.self, from: data)
+                    print(weights.honors)
             }
             catch{
                 print("error loading items \(error)")

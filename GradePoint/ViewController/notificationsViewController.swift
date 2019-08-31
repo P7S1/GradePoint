@@ -82,6 +82,7 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
        self.navItem.title = "Assignments"
         
+        
                 // Do any additional setup after loading the view.
     }
     
@@ -92,7 +93,6 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
         isHidden.isHidden = reminders.count != 0 || completedReminderes.count != 0
         print(reminders.count != 0 && completedReminderes.count != 0)
-    
     }
     
     
@@ -315,6 +315,8 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
             myString = "\(myString)\n\(ray[i])"
         }
         
+        myString = "\(myString)\n \(reminder.notes)"
+        
         let output = NSMutableAttributedString(string: myString)
 
         print(ray)
@@ -427,6 +429,7 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         for i in 1...ray.count-1{
             myString = "\(myString)\n\(ray[i])"
         }
+        myString = "\(myString)\n \(reminder.notes)"
         
         let output = NSMutableAttributedString(string: myString)
         

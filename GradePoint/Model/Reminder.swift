@@ -6,11 +6,8 @@
 //  Copyright © 2019 Atemnkeng Fontem. All rights reserved.
 //
 import UIKit
-import Foundation
 import UserNotifications
-
-class Reminder: Codable{
-    
+class oldReminder : Codable{
 
     var name : String = "Untitled"
     
@@ -25,7 +22,10 @@ class Reminder: Codable{
     var course = Course()
     
     let uuid = UUID().uuidString
-
+}
+class Reminder: oldReminder{
+    
+    var notes = ""
     
     func initReminder(reminderName : String, isCompleted: Bool, dueDate: NSDate, newCourse: Course, remindOn: NSDate){
         name = reminderName
