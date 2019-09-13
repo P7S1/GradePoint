@@ -7,26 +7,33 @@
 //
 import UIKit
 import UserNotifications
-class oldReminder : Codable{
+import RealmSwift
+class oldReminder : Object, Codable{
 
-    var name : String = "Untitled"
+    @objc dynamic var name : String = "Untitled"
     
-    var completed : Bool = false
+    @objc dynamic var completed : Bool = false
     
-    var willNotify : Bool = false
+    @objc dynamic var willNotify : Bool = false
     
-    var due = Date()
+    @objc dynamic var due = Date()
     
-    var reminder = Date()
+    @objc dynamic var  reminder = Date()
     
-    var course = Course()
-    
-    let uuid = UUID().uuidString
+    @objc dynamic var  course : Course?
+    @objc dynamic var uuid = UUID().uuidString
 }
 class Reminder: oldReminder{
     
-    var notes = ""
+    @objc dynamic var notes = ""
     
+   @objc dynamic var repeats = "never"
+    
+    @objc dynamic var  priority = 0
+    
+    @objc dynamic var image : Data?
+    
+    @objc dynamic var hasImage = false
     func initReminder(reminderName : String, isCompleted: Bool, dueDate: NSDate, newCourse: Course, remindOn: NSDate){
         name = reminderName
         
@@ -36,6 +43,30 @@ class Reminder: oldReminder{
         
         course = newCourse
         reminder = remindOn as Date
+    }
+    
+    func match(remind : Reminder){
+        name = remind.name
+        
+        completed = remind.completed
+        
+        due = remind.due
+        
+        willNotify = remind.willNotify
+        
+        course = remind.course
+        
+        reminder = remind.reminder
+        
+        notes = remind.notes
+        
+        repeats = remind.repeats
+        
+        priority = remind.priority
+        
+        image = remind.image
+        
+        uuid = remind.uuid
     }
     
     func equals(remind : Reminder) -> Bool{

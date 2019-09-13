@@ -12,10 +12,12 @@
 		DF2584C1230DCC89009CFEE3 /* CourseWeights.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2584C0230DCC89009CFEE3 /* CourseWeights.swift */; };
 		DF2584C3230DE900009CFEE3 /* editWeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2584C2230DE900009CFEE3 /* editWeightViewController.swift */; };
 		DF2584C5230DF272009CFEE3 /* selectWeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2584C4230DF272009CFEE3 /* selectWeightViewController.swift */; };
+		DF4B1D97232B0D18002B14D2 /* remindersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4B1D96232B0D18002B14D2 /* remindersTableViewCell.swift */; };
+		DF4B1D99232B0D73002B14D2 /* headerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4B1D98232B0D73002B14D2 /* headerViewCell.swift */; };
+		DF4B1D9B232B0E4A002B14D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF4B1D9A232B0E4A002B14D2 /* Main.storyboard */; };
 		DF5BC8AB22F8633A00E923A9 /* aboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BC8AA22F8633A00E923A9 /* aboutViewController.swift */; };
 		DF5BC8AF22FA803E00E923A9 /* notificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BC8AE22FA803E00E923A9 /* notificationsViewController.swift */; };
 		DF5BC8B122FA882900E923A9 /* customTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5BC8B022FA882900E923A9 /* customTabBarViewController.swift */; };
-		DF5BC8B822FAB9C400E923A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF5BC8B722FAB9C400E923A9 /* Main.storyboard */; settings = {ASSET_TAGS = (navController, ); }; };
 		DF5EB29C230657D200AAE64D /* NotificationPhrases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5EB29B230657D200AAE64D /* NotificationPhrases.swift */; };
 		DF673A75230FA3F700B56134 /* supportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF673A74230FA3F700B56134 /* supportViewController.swift */; };
 		DF8AB25522F5346D00845B88 /* howItWorksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF8AB25422F5346D00845B88 /* howItWorksViewController.swift */; };
@@ -28,9 +30,20 @@
 		DFBA9C4B22E6D8C2007CCA67 /* settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA9C4A22E6D8C2007CCA67 /* settingsViewController.swift */; };
 		DFBA9C5122ED538E007CCA67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFBA9C5022ED538E007CCA67 /* Assets.xcassets */; };
 		DFBA9C5D22F2CAE7007CCA67 /* menuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFBA9C5C22F2CAE7007CCA67 /* menuTableViewCell.swift */; };
+		DFC37F51231EF73A00637C33 /* termsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F50231EF73A00637C33 /* termsViewController.swift */; };
+		DFC37F532320646800637C33 /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F522320646800637C33 /* AppStoreReviewManager.swift */; };
+		DFC37F5923233D1500637C33 /* enterPercentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F5823233D1500637C33 /* enterPercentViewController.swift */; };
+		DFC37F5B2323432300637C33 /* PercentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F5A2323432300637C33 /* PercentHandler.swift */; };
+		DFC37F5D2323F91700637C33 /* gradeCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F5C2323F91700637C33 /* gradeCalculatorViewController.swift */; };
+		DFC37F5F2325A23C00637C33 /* addSyllabusItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F5E2325A23C00637C33 /* addSyllabusItemViewController.swift */; };
+		DFC37F612325A44C00637C33 /* SyllabusItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F602325A44C00637C33 /* SyllabusItem.swift */; };
+		DFC37F632325A5B700637C33 /* syllabusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F622325A5B700637C33 /* syllabusTableViewCell.swift */; };
+		DFC37F652325C30400637C33 /* syllabusItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F642325C30400637C33 /* syllabusItemsViewController.swift */; };
+		DFC37F672325C31A00637C33 /* createSyllabusItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F662325C31A00637C33 /* createSyllabusItemViewController.swift */; };
+		DFC37F692325D8C700637C33 /* SyllabusAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC37F682325D8C700637C33 /* SyllabusAssignment.swift */; };
 		DFD5F98D22FDB545009724A7 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD5F98C22FDB545009724A7 /* Reminder.swift */; };
-		DFD8489A22FFE1F400143D0B /* remindersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8489922FFE1F400143D0B /* remindersTableViewCell.swift */; };
-		DFD8489C22FFE21900143D0B /* headerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD8489B22FFE21900143D0B /* headerViewCell.swift */; };
+		DFD80902231C3AF5009AA248 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD80901231C3AF5009AA248 /* StoreKit.framework */; };
+		DFD80904231C6D93009AA248 /* InternetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD80903231C6D93009AA248 /* InternetTest.swift */; };
 		DFD848CB22FFF02C00143D0B /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DFD848C822FFF02C00143D0B /* ProgressHUD.bundle */; };
 		DFD848CC22FFF02C00143D0B /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DFD848C922FFF02C00143D0B /* ProgressHUD.m */; };
 		DFD848E22301414500143D0B /* bigCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD848E12301414500143D0B /* bigCalendarViewController.swift */; };
@@ -52,10 +65,12 @@
 		DF2584C0230DCC89009CFEE3 /* CourseWeights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseWeights.swift; sourceTree = "<group>"; };
 		DF2584C2230DE900009CFEE3 /* editWeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editWeightViewController.swift; sourceTree = "<group>"; };
 		DF2584C4230DF272009CFEE3 /* selectWeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectWeightViewController.swift; sourceTree = "<group>"; };
+		DF4B1D96232B0D18002B14D2 /* remindersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = remindersTableViewCell.swift; sourceTree = "<group>"; };
+		DF4B1D98232B0D73002B14D2 /* headerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerViewCell.swift; sourceTree = "<group>"; };
+		DF4B1D9A232B0E4A002B14D2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../Main.storyboard; sourceTree = "<group>"; };
 		DF5BC8AA22F8633A00E923A9 /* aboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aboutViewController.swift; sourceTree = "<group>"; };
 		DF5BC8AE22FA803E00E923A9 /* notificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notificationsViewController.swift; sourceTree = "<group>"; };
 		DF5BC8B022FA882900E923A9 /* customTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = customTabBarViewController.swift; sourceTree = "<group>"; };
-		DF5BC8B722FAB9C400E923A9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
 		DF5EB29B230657D200AAE64D /* NotificationPhrases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPhrases.swift; sourceTree = "<group>"; };
 		DF673A74230FA3F700B56134 /* supportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = supportViewController.swift; sourceTree = "<group>"; };
 		DF8AB25422F5346D00845B88 /* howItWorksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howItWorksViewController.swift; sourceTree = "<group>"; };
@@ -68,9 +83,20 @@
 		DFBA9C4A22E6D8C2007CCA67 /* settingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsViewController.swift; sourceTree = "<group>"; };
 		DFBA9C5022ED538E007CCA67 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFBA9C5C22F2CAE7007CCA67 /* menuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = menuTableViewCell.swift; sourceTree = "<group>"; };
+		DFC37F50231EF73A00637C33 /* termsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = termsViewController.swift; sourceTree = "<group>"; };
+		DFC37F522320646800637C33 /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
+		DFC37F5823233D1500637C33 /* enterPercentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enterPercentViewController.swift; sourceTree = "<group>"; };
+		DFC37F5A2323432300637C33 /* PercentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PercentHandler.swift; sourceTree = "<group>"; };
+		DFC37F5C2323F91700637C33 /* gradeCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gradeCalculatorViewController.swift; sourceTree = "<group>"; };
+		DFC37F5E2325A23C00637C33 /* addSyllabusItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addSyllabusItemViewController.swift; sourceTree = "<group>"; };
+		DFC37F602325A44C00637C33 /* SyllabusItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusItem.swift; sourceTree = "<group>"; };
+		DFC37F622325A5B700637C33 /* syllabusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = syllabusTableViewCell.swift; sourceTree = "<group>"; };
+		DFC37F642325C30400637C33 /* syllabusItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = syllabusItemsViewController.swift; sourceTree = "<group>"; };
+		DFC37F662325C31A00637C33 /* createSyllabusItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createSyllabusItemViewController.swift; sourceTree = "<group>"; };
+		DFC37F682325D8C700637C33 /* SyllabusAssignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllabusAssignment.swift; sourceTree = "<group>"; };
 		DFD5F98C22FDB545009724A7 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
-		DFD8489922FFE1F400143D0B /* remindersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = remindersTableViewCell.swift; path = ../../../../.Trash/remindersTableViewCell.swift; sourceTree = "<group>"; };
-		DFD8489B22FFE21900143D0B /* headerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = headerViewCell.swift; path = ../../../../.Trash/headerViewCell.swift; sourceTree = "<group>"; };
+		DFD80901231C3AF5009AA248 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DFD80903231C6D93009AA248 /* InternetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetTest.swift; sourceTree = "<group>"; };
 		DFD848C722FFF02C00143D0B /* GradePoint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GradePoint-Bridging-Header.h"; sourceTree = "<group>"; };
 		DFD848C822FFF02C00143D0B /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		DFD848C922FFF02C00143D0B /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -89,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFD80902231C3AF5009AA248 /* StoreKit.framework in Frameworks */,
 				DFFF2B0322F6C72500E9A27C /* WebKit.framework in Frameworks */,
 				FC997C65DECB8B3C40000FCF /* Pods_GradePoint.framework in Frameworks */,
 			);
@@ -145,6 +172,7 @@
 				DFBA9C4A22E6D8C2007CCA67 /* settingsViewController.swift */,
 				DF8AB25422F5346D00845B88 /* howItWorksViewController.swift */,
 				DFFF2AFF22F6C2CE00E9A27C /* privacyPolicyViewController.swift */,
+				DFC37F50231EF73A00637C33 /* termsViewController.swift */,
 				DF5BC8AA22F8633A00E923A9 /* aboutViewController.swift */,
 				DF5BC8AE22FA803E00E923A9 /* notificationsViewController.swift */,
 				DF5BC8B022FA882900E923A9 /* customTabBarViewController.swift */,
@@ -153,6 +181,11 @@
 				DF2584C4230DF272009CFEE3 /* selectWeightViewController.swift */,
 				DF673A74230FA3F700B56134 /* supportViewController.swift */,
 				DFFE55B523163BED0096AED1 /* premiumViewController.swift */,
+				DFC37F5823233D1500637C33 /* enterPercentViewController.swift */,
+				DFC37F5C2323F91700637C33 /* gradeCalculatorViewController.swift */,
+				DFC37F5E2325A23C00637C33 /* addSyllabusItemViewController.swift */,
+				DFC37F642325C30400637C33 /* syllabusItemsViewController.swift */,
+				DFC37F662325C31A00637C33 /* createSyllabusItemViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -161,7 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				DF21688A22DBFCCA00782083 /* LaunchScreen.storyboard */,
-				DF5BC8B722FAB9C400E923A9 /* Main.storyboard */,
+				DF4B1D9A232B0E4A002B14D2 /* Main.storyboard */,
 				DFBA9C5022ED538E007CCA67 /* Assets.xcassets */,
 			);
 			path = View;
@@ -176,11 +209,17 @@
 				DFBA9C5C22F2CAE7007CCA67 /* menuTableViewCell.swift */,
 				DF8AB25622F53F6600845B88 /* howItWorksCollectionViewCell.swift */,
 				DF8AB25822F5426B00845B88 /* howItWorksCard.swift */,
-				DFD8489922FFE1F400143D0B /* remindersTableViewCell.swift */,
 				DFD5F98C22FDB545009724A7 /* Reminder.swift */,
-				DFD8489B22FFE21900143D0B /* headerViewCell.swift */,
 				DF5EB29B230657D200AAE64D /* NotificationPhrases.swift */,
 				DFFE55B923167B860096AED1 /* premiumTableViewCell.swift */,
+				DFD80903231C6D93009AA248 /* InternetTest.swift */,
+				DFC37F522320646800637C33 /* AppStoreReviewManager.swift */,
+				DFC37F5A2323432300637C33 /* PercentHandler.swift */,
+				DFC37F602325A44C00637C33 /* SyllabusItem.swift */,
+				DFC37F622325A5B700637C33 /* syllabusTableViewCell.swift */,
+				DFC37F682325D8C700637C33 /* SyllabusAssignment.swift */,
+				DF4B1D96232B0D18002B14D2 /* remindersTableViewCell.swift */,
+				DF4B1D98232B0D73002B14D2 /* headerViewCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -200,6 +239,7 @@
 		DFFF2B0122F6C72400E9A27C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DFD80901231C3AF5009AA248 /* StoreKit.framework */,
 				DFFF2B0222F6C72500E9A27C /* WebKit.framework */,
 				2E10471A08C1E4950B2EAACB /* Pods_GradePoint.framework */,
 			);
@@ -272,10 +312,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF5BC8B822FAB9C400E923A9 /* Main.storyboard in Resources */,
 				DF21688C22DBFCCA00782083 /* LaunchScreen.storyboard in Resources */,
 				DFD848CB22FFF02C00143D0B /* ProgressHUD.bundle in Resources */,
 				DFBA9C5122ED538E007CCA67 /* Assets.xcassets in Resources */,
+				DF4B1D9B232B0E4A002B14D2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,19 +370,30 @@
 			files = (
 				DFE131B822E2F3A30089B1DD /* Course.swift in Sources */,
 				DF2584C3230DE900009CFEE3 /* editWeightViewController.swift in Sources */,
+				DFD80904231C6D93009AA248 /* InternetTest.swift in Sources */,
+				DF4B1D97232B0D18002B14D2 /* remindersTableViewCell.swift in Sources */,
 				DF8AB25522F5346D00845B88 /* howItWorksViewController.swift in Sources */,
+				DFC37F632325A5B700637C33 /* syllabusTableViewCell.swift in Sources */,
 				DF5BC8B122FA882900E923A9 /* customTabBarViewController.swift in Sources */,
 				DF673A75230FA3F700B56134 /* supportViewController.swift in Sources */,
 				DF2584C5230DF272009CFEE3 /* selectWeightViewController.swift in Sources */,
 				DF5EB29C230657D200AAE64D /* NotificationPhrases.swift in Sources */,
 				DF8AB25922F5426B00845B88 /* howItWorksCard.swift in Sources */,
 				DF9F9C7522DCC3C20071AE73 /* addClassViewController.swift in Sources */,
+				DFC37F612325A44C00637C33 /* SyllabusItem.swift in Sources */,
+				DFC37F692325D8C700637C33 /* SyllabusAssignment.swift in Sources */,
 				DFFE55BA23167B860096AED1 /* premiumTableViewCell.swift in Sources */,
+				DF4B1D99232B0D73002B14D2 /* headerViewCell.swift in Sources */,
 				DFD848CC22FFF02C00143D0B /* ProgressHUD.m in Sources */,
 				DFD848E22301414500143D0B /* bigCalendarViewController.swift in Sources */,
+				DFC37F652325C30400637C33 /* syllabusItemsViewController.swift in Sources */,
 				DF2584C1230DCC89009CFEE3 /* CourseWeights.swift in Sources */,
+				DFC37F5D2323F91700637C33 /* gradeCalculatorViewController.swift in Sources */,
 				DF21688222DBFCC900782083 /* AppDelegate.swift in Sources */,
+				DFC37F5923233D1500637C33 /* enterPercentViewController.swift in Sources */,
+				DFC37F672325C31A00637C33 /* createSyllabusItemViewController.swift in Sources */,
 				DF9F9C8022DD7C940071AE73 /* classesTableViewCell.swift in Sources */,
+				DFC37F5F2325A23C00637C33 /* addSyllabusItemViewController.swift in Sources */,
 				DF5BC8AF22FA803E00E923A9 /* notificationsViewController.swift in Sources */,
 				DFFF2B0022F6C2CE00E9A27C /* privacyPolicyViewController.swift in Sources */,
 				DF8AB25722F53F6600845B88 /* howItWorksCollectionViewCell.swift in Sources */,
@@ -351,10 +402,11 @@
 				DFD5F98D22FDB545009724A7 /* Reminder.swift in Sources */,
 				DFFE55B623163BED0096AED1 /* premiumViewController.swift in Sources */,
 				DFBA9C5D22F2CAE7007CCA67 /* menuTableViewCell.swift in Sources */,
-				DFD8489A22FFE1F400143D0B /* remindersTableViewCell.swift in Sources */,
-				DFD8489C22FFE21900143D0B /* headerViewCell.swift in Sources */,
 				DF9C4C1F22FDCC5100079246 /* createReminderViewController.swift in Sources */,
+				DFC37F51231EF73A00637C33 /* termsViewController.swift in Sources */,
 				DFBA9C4B22E6D8C2007CCA67 /* settingsViewController.swift in Sources */,
+				DFC37F5B2323432300637C33 /* PercentHandler.swift in Sources */,
+				DFC37F532320646800637C33 /* AppStoreReviewManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

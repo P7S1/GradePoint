@@ -120,15 +120,21 @@ class bigCalendarViewController: UIViewController, UITableViewDelegate, UITableV
             cell.completedText.text = "Not Completed"
             cell.completedText.textColor = #colorLiteral(red: 1, green: 0.3098039216, blue: 0.2666666667, alpha: 1)
         }
-        cell.className.text = cellReminder.course.name
+       if let test = cellReminder.course{
+           cell.className.text = test.name
+        }else{
+            cell.className.text = Course().name
+        }
+        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 tableView.deselectRow(at: indexPath, animated: true)
+
         
-        var indexpath = IndexPath()
+        var indexpath = IndexPath(row: 0, section: 0)
         if reminders.count > 0{
         for i in 0...reminders.count-1{
             if reminders[i].equals(remind: calendarReminders[indexPath.row])
@@ -143,13 +149,13 @@ class bigCalendarViewController: UIViewController, UITableViewDelegate, UITableV
             if completedReminderes[i].equals(remind: calendarReminders[indexPath.row])
             {
                 indexpath = IndexPath(row: i, section: 1)
-                
                 print("completed reminder match \(indexpath)")
             }
         }
         }
         
         editingIndexPath = indexpath
+        print("about to post notification at \(editingIndexPath)")
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "presentNotification"), object: nil)
     }
     

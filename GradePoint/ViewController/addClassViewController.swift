@@ -5,11 +5,12 @@
 //  Created by Atemnkeng Fontem on 7/15/19.
 //  Copyright © 2019 Atemnkeng Fontem. All rights reserved.
 //
-
 import UIKit
 import UserNotifications
+import RealmSwift
 var weights : CourseWeights = CourseWeights()
-var classArray : [Course] = [Course]()
+var classArray : Results<Course>!
+var realm = try! Realm()
 var editingIndex = 0
 var userIsEditing = false
 var userTappedOut = false
@@ -17,6 +18,7 @@ let dataFilePath = FileManager.default.urls(for: .documentDirectory,in:.userDoma
 let defaults = UserDefaults.standard
 
 class addClassViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UIGestureRecognizerDelegate{
+    
     
     var globalGPA = 0.000
     var globalUnweightedGPA = 0.000
@@ -32,6 +34,8 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         super.viewWillAppear(true)
+    
+    
         
         classOutlet.delegate = self
         classOutlet.dataSource = self
@@ -48,6 +52,18 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         // Do any additional setup after loading the view.
     }
     override func viewDidAppear(_ animated: Bool) {
+        //launches promo only once
+        
+        AppStoreReviewManager.requestReviewIfAppropriate()
+        
+        
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        let save = UserDefaults.standard
+        if save.value(forKey: "Purchase") == nil && !launchedBefore{
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            let vc = (self.storyboard?.instantiateViewController(withIdentifier: "premiumVIewController") as! premiumViewController)
+            self.present(vc, animated: true, completion: nil)
+        }
         if classArray.count == 0{
         classOutlet.reloadData()
         }
@@ -111,12 +127,16 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        classOutlet.deselectRow(at: indexPath, animated: false)
+        editingIndexPath = indexPath
+        self.performSegue(withIdentifier: "goToCalculateGrade", sender: self)
+        classOutlet.deselectRow(at: indexPath, animated: true)
     }
    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
       if editingStyle == .delete
         {
-            classArray.remove(at:indexPath.row)
+            try! realm.write {
+            realm.delete(classArray[indexPath.row])
+            }
             classOutlet.deleteRows(at: [indexPath], with: .automatic)
             calculateGPA()
         }
@@ -140,11 +160,19 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             vc.modalPresentationStyle = .overCurrentContext
             self.present(vc, animated: true, completion: nil)
         }
+        let calc = UIContextualAction(style:.normal, title: nil) { (action, view, completionHandler) in
+            editingIndexPath = indexPath
+            self.performSegue(withIdentifier: "goToCalculateGrade", sender: self)
+        }
+        calc.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.8039215686, blue: 0.2549019608, alpha: 1)
         edit.backgroundColor = #colorLiteral(red: 1, green: 0.662745098, blue: 0.07843137255, alpha: 1)
+        calc.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
+            UIImage(named: "calc")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+        }
         edit.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "edit")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
-        return UISwipeActionsConfiguration(actions: [edit])
+        return UISwipeActionsConfiguration(actions: [edit,calc])
     }
     //TODO: CALCULATE GPA
     func calculateGPA(){
@@ -163,10 +191,14 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             points = points +  (weights.getWeight(course: classArray[i]) * classArray[i].credits)
            // points = points +  (classArray[i].getValue() * classArray[i].credits)
             let previousWeight = classArray[i].weight
-            classArray[i].weight = "Regular"
+                try! realm.write {
+                classArray[i].weight = "Regular"
+                }
             unweightedPoints = unweightedPoints + (CourseWeights().getWeight(course: classArray[i]) * classArray[i].credits)
             creditsSum = creditsSum + classArray[i].credits
-            classArray[i].weight = previousWeight
+                try! realm.write {
+                classArray[i].weight = previousWeight
+                }
             }
         }
         gpa = points / creditsSum
@@ -192,7 +224,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         classOutlet.estimatedRowHeight = 200.0
         classOutlet.reloadData()
         classOutlet.separatorStyle = .none
-        
         isEmpty.isHidden = classArray.count != 0
         calculateGPA()
     }
@@ -215,11 +246,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             userTappedOut = false
         }else{
         if(userIsEditing){
-            let indexPath = IndexPath(row: editingIndex, section:0)
-            classOutlet.beginUpdates()
-            classOutlet.deleteRows(at: [indexPath], with: .automatic)
-            classOutlet.insertRows(at: [indexPath], with: .automatic)
-            classOutlet.endUpdates()
+            classOutlet.reloadData()
             userIsEditing = false
         }
         else{

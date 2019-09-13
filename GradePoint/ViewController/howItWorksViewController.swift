@@ -19,12 +19,9 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        bannerView.adUnitID = "ca-app-pub-7404153809143887/2785430968"
-        //vca-app-pub-7404153809143887/2785430968
-        bannerView.rootViewController = self
         NotificationCenter.default.addObserver(self, selector: #selector(unDimScreen), name:NSNotification.Name(rawValue: "unDimScreen"), object: nil)
-
+        
+        showAds()
         
        cardOutlet.dataSource = self
         cardOutlet.delegate = self
@@ -35,6 +32,21 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+    }
+    func showAds(){
+        let save = UserDefaults.standard
+        if save.value(forKey: "Purchase") == nil{
+            
+            bannerView.adUnitID = "ca-app-pub-7404153809143887/2785430968"
+            
+            bannerView.rootViewController = self
+            
+            
+            print("User is NOT Premium, will show ads")
+        }else{
+            bannerView.isHidden = true
+            print("User is Premium, won't show ads")
+        }
     }
      @objc func unDimScreen(){
         UIView.animate(withDuration: 0.2) {

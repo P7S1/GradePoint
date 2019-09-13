@@ -8,6 +8,7 @@
 import StoreKit
 import UIKit
 import GoogleMobileAds
+import RealmSwift
 class createClassViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, GADInterstitialDelegate{
     @IBOutlet weak var gradePicker: UIPickerView!
     @IBOutlet weak var classTextFieldContent: UITextField!
@@ -17,16 +18,22 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBOutlet weak var editLabel: UILabel!
     @IBOutlet weak var editSwitch: UISwitch!
     
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     var interstitial: GADInterstitial!
     
+    var vc = enterPercentViewController()
+    
+    @IBOutlet weak var sectionView: UIView!
+    
+    var isPercent = false
     var name = ""
     var credits = 0.5
     var selectedGrade = "A+"
     var selectedWeight = "Regular"
     let grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
     let weights = ["Regular", "Honors", "AP", "IB SL", "IB HL", "College"]
-    let labelTexts = ["Grade", "Weight"]
+
     
     @IBOutlet weak var createView: UIView!
     
@@ -39,7 +46,10 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        vc = self.storyboard?.instantiateViewController(withIdentifier: "enterPercentViewController") as! enterPercentViewController
+        
+    
         
         initialY = self.view.frame.origin.y
         editSwitch.isOn = false
@@ -100,17 +110,6 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         selectedWeight = weights[row]
         }
     }
-  /*  func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        var string = ""
-        if(component==0){
-            string = grades[row]
-        }
-        else{
-            string = weights[row]
-        }
-        return NSAttributedString(string: string, attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1), NSAttributedString.Key.font:
-            UIFont(name: "Helvetica-Bold", size: 17.0)!])
-    } */
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let pickerLabel = UILabel()
         
@@ -141,11 +140,26 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     @IBAction func createClassPressed(_ sender: Any) {
         if(userIsEditing){
             ProgressHUD.showSuccess("Edited Class")
-         classArray[editingIndex].grade = selectedGrade
-         classArray[editingIndex].credits = credits
-         classArray[editingIndex].weight = selectedWeight
-         classArray[editingIndex].name = classTextFieldContent.text!
-         classArray[editingIndex].exempt = editSwitch.isOn
+            try! realm.write {
+                let percent2 = vc.getPercent()
+                print(PercentHandler().getLetterGrade(percent: percent2))
+                print(vc.getWeight())
+                classArray[editingIndex].useCalculatedGrade = false
+                classArray[editingIndex].grade = selectedGrade
+                classArray[editingIndex].credits = credits
+                classArray[editingIndex].weight = selectedWeight
+                classArray[editingIndex].name = classTextFieldContent.text!
+                classArray[editingIndex].exempt = editSwitch.isOn
+                classArray[editingIndex].isPercent = isPercent
+                if isPercent{
+                classArray[editingIndex].isPercent = true
+                let percent = vc.getPercent()
+                classArray[editingIndex].percent = percent
+                print(percent)
+                classArray[editingIndex].grade = PercentHandler().getLetterGrade(percent: percent)
+                classArray[editingIndex].weight = vc.getWeight()
+                }
+            }
             print("class edited successfully")
         }
         else {
@@ -161,11 +175,21 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
             newClass.name = "Untitled"
             print("found a caught nil")
         }
-        newClass.grade = selectedGrade
+            if isPercent{
+                newClass.isPercent = isPercent
+                newClass.grade = PercentHandler().getLetterGrade(percent: vc.getPercent())
+                newClass.weight = vc.getWeight()
+                newClass.percent = vc.getPercent()
+            }else{
+                newClass.grade = selectedGrade
+                newClass.weight = selectedWeight
+            }
         newClass.credits = credits
-        newClass.weight = selectedWeight
         newClass.exempt = editSwitch.isOn
-        classArray.append(newClass)
+         
+            try! realm.write {
+                realm.add(newClass)
+            }
             
         print("class save successfully")
         print("class added successfully, closing view")
@@ -208,8 +232,9 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         return count <= 18
     }
     func presentAd(){
+        let save = UserDefaults.standard
         adCount = adCount + 1
-        if interstitial.isReady && adCount % 3 == 0{
+        if interstitial.isReady && adCount % 3 == 0 && save.value(forKey: "Purchase") == nil{
             interstitial.present(fromRootViewController: self)
             print("ad was ready")
         } else {
@@ -229,6 +254,17 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         
     }
     func initClass(){
+        let save = UserDefaults.standard
+        if classArray[editingIndex].isPercent && save.value(forKey: "Purchase") != nil{
+        segmentedControl.selectedSegmentIndex = 1
+        vc.view.frame = sectionView.bounds
+        sectionView.addSubview(vc.view)
+        isPercent = true
+        }else{
+        isPercent = false
+        segmentedControl.selectedSegmentIndex = 0
+        }
+        isPercent = classArray[editingIndex].isPercent
         editSwitch.isOn = classArray[editingIndex].exempt
         selectedGrade = classArray[editingIndex].grade
         selectedWeight = classArray[editingIndex].weight
@@ -287,8 +323,8 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
                    userTappedOut = true
                    dismissScreen()
                 }
-            
         }
+        
         
         
     
@@ -302,11 +338,40 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     }
     */
     }
-    
-    
-    
 
+    @IBAction func switchAction(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex{
+        case 0:
+            print("notifications")
+            vc.view.removeFromSuperview()
+            isPercent = false
+            break
+        case 1:
+            let save = UserDefaults.standard
+            if save.value(forKey: "Purchase") == nil{
+                segmentedControl.selectedSegmentIndex = 0
+                isPercent = false
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "premiumVIewController") as! premiumViewController
+                self.present(vc, animated: true, completion: nil)
+            }else{
+                print("Calender view")
+                vc.view.frame = sectionView.bounds
+                sectionView.addSubview(vc.view)
+                isPercent = true
+            }
+            break
+        default:
+            break
+        }
+        
+        
+    }
+    
+    
+    
+    
 }
+
 extension createClassViewController: UITextFieldDelegate{
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -16,6 +16,9 @@ class privacyPolicyViewController: UIViewController, WKNavigationDelegate, WKUID
     
     var activityIndicator: UIActivityIndicatorView! = UIActivityIndicatorView()
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -33,29 +36,15 @@ class privacyPolicyViewController: UIViewController, WKNavigationDelegate, WKUID
     }
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         print("webView did start")
-        loadingStart()
+        ProgressHUD.show()
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("webVIew did finish")
-        loadingEnd()
+        ProgressHUD.dismiss()
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         print("webView did fail")
-    }
-    func loadingStart(){
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        
-        activityIndicator.style = UIActivityIndicatorView.Style.gray
-        
-        view.addSubview(activityIndicator)
-        
-        activityIndicator.startAnimating()
-    }
-    func loadingEnd(){
-        activityIndicator.stopAnimating()
-        
     }
 }

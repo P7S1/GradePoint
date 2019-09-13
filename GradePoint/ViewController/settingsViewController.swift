@@ -24,6 +24,9 @@ class settingViewController : UITableViewController{
         settingOutlet.dataSource = self
         
     }
+    override func viewDidAppear(_ animated: Bool) {
+        ProgressHUD.dismiss()
+    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         settingOutlet.deselectRow(at: indexPath, animated: true)
         switch indexPath.section {
@@ -72,6 +75,10 @@ class settingViewController : UITableViewController{
                 print("Privacy Policy")
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "privacyPolicyView") as? privacyPolicyViewController
                 self.navigationController?.pushViewController(vc!, animated: true)
+            case 1:
+                print("Terms and Conditions")
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "termsViewController") as? termsViewController
+                self.navigationController?.pushViewController(vc!, animated: true)
             default:
                 print("Legal section settings failure")
             }
@@ -90,9 +97,11 @@ class settingViewController : UITableViewController{
         let refreshAlert = UIAlertController(title: "Are you sure you want to delete all data?", message: "All data will be lost, and there is no way to recover it.", preferredStyle: UIAlertController.Style.alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction!) in
-            completedReminderes.removeAll()
-            reminders.removeAll()
-            classArray.removeAll()
+            try! realm.write {
+                realm.deleteAll()
+            }
+           weights = CourseWeights()
+            ProgressHUD.showSuccess("Data Deleted")
         }))
         
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in

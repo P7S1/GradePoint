@@ -5,14 +5,15 @@
 //  Created by Atemnkeng Fontem on 8/6/19.
 //  Copyright © 2019 Atemnkeng Fontem. All rights reserved.
 //
+import SKPhotoBrowser
 import DJSemiModalViewController
 import UIKit
 import UserNotifications
-
+import RealmSwift
 import GoogleMobileAds
 
 var editingIndexPath : IndexPath = IndexPath.init()
-var completedReminderes : [Reminder] = [Reminder]()
+var completedReminderes : Results<Reminder>!
 var userNotificationsEnabled = false
 
 let remindersDataFilePath = FileManager.default.urls(for: .documentDirectory,in:.userDomainMask).first?.appendingPathComponent("Reminders.plist")
@@ -34,6 +35,8 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var vc : UIViewController!
     
+    var globalController = DJSemiModalViewController()
+    
     @IBOutlet weak var sectionView: UIView!
     
 
@@ -41,13 +44,9 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        showAds()
         
         isHidden.isHidden = reminders.count == 0 || completedReminderes.count == 0
-        
-        
-        bannerView.adUnitID = "ca-app-pub-7404153809143887/3551717727"
-        //ca-app-pub-7404153809143887/3551717727
-        bannerView.rootViewController = self
         
         NotificationCenter.default.addObserver(self, selector: #selector( loadList), name:NSNotification.Name(rawValue: "edit"), object: nil)
         
@@ -64,7 +63,7 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
         reminderOutlet.delegate = self
         reminderOutlet.dataSource = self
-        
+    
         
         NotificationCenter.default.addObserver(self, selector: #selector(unDimScreen), name:NSNotification.Name(rawValue: "unDimScreen"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(loadReminders), name:NSNotification.Name(rawValue: "loadReminders"), object: nil)
@@ -85,6 +84,23 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
                 // Do any additional setup after loading the view.
     }
+    
+    func showAds(){
+        let save = UserDefaults.standard
+        if save.value(forKey: "Purchase") == nil{
+            
+            bannerView.adUnitID = "ca-app-pub-7404153809143887/3551717727"
+            
+            bannerView.rootViewController = self
+            
+            
+            print("User is NOT Premium, will show ads")
+        }else{
+            bannerView.isHidden = true
+            print("User is Premium, won't show ads")
+        }
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         if reminders.count == 0 && completedReminderes.count == 0{
@@ -120,6 +136,9 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.notificationImage.isHidden = !cellReminder.willNotify
         cell.notificationImage.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         
+        cell.hasAttachment.isHidden = !cellReminder.hasImage
+        cell.hasAttachment.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        
         if cellReminder.completed{
             cell.completedText.text = "Completed"
             cell.completedText.textColor = #colorLiteral(red: 0.2352941176, green: 1, blue: 0.3333333333, alpha: 1)
@@ -128,7 +147,11 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.completedText.text = "Not Completed"
             cell.completedText.textColor = #colorLiteral(red: 1, green: 0.3098039216, blue: 0.2666666667, alpha: 1)
         }
-        cell.className.text = cellReminder.course.name
+        if let test = cellReminder.course{
+            cell.className.text = test.name
+        }else{
+            cell.className.text = Course().name
+        }
         
         return cell
     }
@@ -148,10 +171,14 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         if editingStyle == .delete
         {
             if(indexPath.section == 0){
-            reminders.remove(at:indexPath.row)
+                try! realm.write {
+                 realm.delete(reminders[indexPath.row])
+                }
             }
             else{
-            completedReminderes.remove(at:indexPath.row)
+                try! realm.write {
+                    realm.delete(completedReminderes[indexPath.row])
+                }
             }
             reminderOutlet.deleteRows(at: [indexPath], with: .automatic)
             
@@ -163,23 +190,24 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         if indexPath.section == 0 {
         //Complete
          edit = UIContextualAction(style:.normal, title: nil) { (action, view, completionHandler) in
-            reminders[indexPath.row].completed = true
-            completedReminderes.append(reminders[indexPath.row])
+
             
-            let newIndexPath = IndexPath(row: completedReminderes.count-1, section: 1)
-            
-            
-            reminders.remove(at:indexPath.row)
-            self.reminderOutlet.beginUpdates()
-            self.reminderOutlet.insertRows(at: [newIndexPath], with: .automatic)
-            self.reminderOutlet.deleteRows(at: [indexPath], with: .automatic)
-            self.reminderOutlet.endUpdates()
+            try! realm.write {
+            let newReminder = Reminder()
+            newReminder.match(remind: reminders[indexPath.row])
+            realm.delete(reminders[indexPath.row])
+            newReminder.completed = true
+            realm.add(newReminder)
+            }
+            print(reminders!)
+            print(completedReminderes!)
+
+            self.reminderOutlet.reloadData()
             
             completionHandler(true)
             
             ProgressHUD.showSuccess("Completed")
             
-            print("User swiped complete a cell")
         }
         edit.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.7647058824, blue: 0.2156862745, alpha: 1)
         edit.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
@@ -191,23 +219,18 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
              edit = UIContextualAction(style:.normal, title: nil) { (action, view, completionHandler) in
         
                 ProgressHUD.showError("Uncomplete")
+                try! realm.write {
+                    let newReminder = Reminder()
+                    newReminder.match(remind: completedReminderes[indexPath.row])
+                    realm.delete(completedReminderes[indexPath.row])
+                    newReminder.completed = false
+                    realm.add(newReminder)
+                }
                 
-                completedReminderes[indexPath.row].completed = false
-                reminders.append(completedReminderes[indexPath.row])
-                
-                
-                let newIndexPath = IndexPath(row: reminders.count-1, section: 0)
-                
-                
-                completedReminderes.remove(at:indexPath.row)
-                self.reminderOutlet.beginUpdates()
-                self.reminderOutlet.insertRows(at: [newIndexPath], with: .automatic)
-                self.reminderOutlet.deleteRows(at: [indexPath], with: .automatic)
-                self.reminderOutlet.endUpdates()
+                self.reminderOutlet.reloadData()
                 
                 completionHandler(true)
                 
-                print("User swiped to de complete a cell")
             }
             
             edit.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.137254902, blue: 0.2941176471, alpha: 1)
@@ -298,7 +321,11 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         //name
         var stringName = ""
-        stringName = reminder.course.name
+       if let test = reminder.course{
+            stringName = test.name
+        }else{
+            stringName = Course().name
+        }
         
         //completed
         var stringCompleted = ""
@@ -337,10 +364,30 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
         output.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, output.length))
         
-        label.numberOfLines = 5
+        let base = myString
+        let ns = base as NSString
+        var count = 0
+        ns.enumerateLines { (str, _) in
+            count = count + 1
+        }
+        
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         label.attributedText = output
         label.textAlignment = .center
+        label.sizeToFit()
         controller.addArrangedSubview(view: label)
+
+            globalController = controller
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            button.backgroundColor = #colorLiteral(red: 1, green: 0.6235294118, blue: 0.03921568627, alpha: 1)
+            button.setTitle("View Attatchment", for: .normal)
+            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+            button.clipsToBounds = true
+            button.layer.cornerRadius = 14
+            button.center = self.view.center
+            
+            controller.addArrangedSubview(view: button, height: 40)
         
         controller.presentOn(presentingViewController: self, animated: true, onDismiss: { })
     }
@@ -382,7 +429,6 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         let controller = DJSemiModalViewController()
         
         var reminder = Reminder()
-        
         if editingIndexPath.section == 0 && reminders.count > 0{
         reminder = reminders[editingIndexPath.row]
         }else if editingIndexPath.section == 1 && completedReminderes.count > 0{
@@ -413,7 +459,12 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         }
         //name
         var stringName = ""
-        stringName = reminder.course.name
+        if let test = reminder.course{
+        stringName = test.name
+        }else{
+            stringName = "No Class"
+        }
+
         
         //completed
         var stringCompleted = ""
@@ -450,13 +501,64 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         output.addAttributes(myAttribute2, range: NSMakeRange(0, output.length))
         
         output.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, output.length))
+        let base = myString
+        let ns = base as NSString
+        var count = 0
+        ns.enumerateLines { (str, _) in
+            count = count + 1
+        }
         
-        label.numberOfLines = 5
+        label.numberOfLines = count
         label.attributedText = output
         label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
         controller.addArrangedSubview(view: label)
+
+            globalController = controller
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            button.backgroundColor = #colorLiteral(red: 1, green: 0.6235294118, blue: 0.03921568627, alpha: 1)
+            button.setTitle("View Attatchment", for: .normal)
+            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+            button.clipsToBounds = true
+            button.layer.cornerRadius = 14
+            button.center = self.view.center
+            
+            controller.addArrangedSubview(view: button, height: 40)
         
         controller.presentOn(presentingViewController: self, animated: true, onDismiss: { })
+    }
+    
+    @objc func buttonAction(sender: UIButton!) {
+        globalController.dismiss(animated: true, completion: nil)
+        print("Button tapped at \(editingIndexPath)")
+        var reminder = Reminder()
+        if editingIndexPath.section == 0 && reminders.count > 0{
+            reminder = reminders[editingIndexPath.row]
+        }else if editingIndexPath.section == 1 && completedReminderes.count > 0{
+            reminder = completedReminderes[editingIndexPath.row]
+        }
+        if let data = reminder.image{
+        let image = UIImage(data: data)
+            if image != nil{
+        presentImage(img: image!)
+            }else{
+                ProgressHUD.showError("No Image Found")
+            }
+        }else{
+           ProgressHUD.showError("No Image Found")
+        }
+    }
+    func presentImage(img : UIImage){
+        print("Presenting Image Attachment")
+        // 1. create SKPhoto Array from UIImage
+        var images = [SKPhoto]()
+        let photo = SKPhoto.photoWithImage(img)// add some UIImage
+        images.append(photo)
+        
+        // 2. create PhotoBrowser Instance, and present from your viewController.
+        let browser = SKPhotoBrowser(photos: images)
+        browser.initializePageIndex(0)
+        present(browser, animated: true, completion: {})
     }
     /*
     // MARK: - Navigation
