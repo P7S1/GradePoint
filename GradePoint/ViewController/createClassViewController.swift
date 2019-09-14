@@ -115,7 +115,12 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
         
         var string = ""
         
-        pickerLabel.textColor = UIColor.darkGray
+        if #available(iOS 13.0, *) {
+            pickerLabel.textColor = .secondaryLabel
+        } else {
+            pickerLabel.textColor = UIColor.lightGray
+            // Fallback on earlier versions
+        }
         
         if(component==0){
             string = grades[row]

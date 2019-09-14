@@ -15,10 +15,20 @@ class aboutViewController: UIViewController {
         super.viewDidLoad()
         
             self.navigationItem.title = "About"
+        var titleAttributes = [NSAttributedString.Key.font:
+        UIFont(name: "Helvetica-Bold", size: 34.0)!,
+                           NSAttributedString.Key.foregroundColor: UIColor.black] as [NSAttributedString.Key: Any]
         
-        let titleAttributes = [NSAttributedString.Key.font:
+        if #available(iOS 13.0, *) {
+             titleAttributes = [NSAttributedString.Key.font:
+                UIFont(name: "Helvetica-Bold", size: 34.0)!,
+                                   NSAttributedString.Key.foregroundColor: UIColor.label] as [NSAttributedString.Key: Any]
+        } else {
+             titleAttributes = [NSAttributedString.Key.font:
             UIFont(name: "Helvetica-Bold", size: 34.0)!,
-                          NSAttributedString.Key.foregroundColor: UIColor.black] as [NSAttributedString.Key: Any]
+                               NSAttributedString.Key.foregroundColor: UIColor.black] as [NSAttributedString.Key: Any]
+            // Fallback on earlier versions
+        }
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.firstLineHeadIndent = 10

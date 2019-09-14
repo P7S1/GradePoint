@@ -72,6 +72,8 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     //TODO: Share functionality
     @IBAction func shareButton(_ sender: Any) {
         let activityController = UIActivityViewController(activityItems: ["I got a weighted gpa of \(String(format: "%.3f", globalGPA)) and \(String(format: "%.3f", globalUnweightedGPA)) unweighted! I calculated it using the gpa app. Check it out here: https://itunes.apple.com/us/app/gradepoint/id1477275391?ls=1&mt=8"], applicationActivities: nil)
+        activityController.popoverPresentationController?.sourceView = self.view
+        
         present(activityController, animated: true, completion: nil)
     }
     //TODO: ADD CLASS PRESSED
