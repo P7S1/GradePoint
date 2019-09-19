@@ -34,8 +34,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         super.viewWillAppear(true)
-    
-    
+        
         
         classOutlet.delegate = self
         classOutlet.dataSource = self
@@ -54,6 +53,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidAppear(_ animated: Bool) {
         //launches promo only once
         
+        
         AppStoreReviewManager.requestReviewIfAppropriate()
         
         
@@ -62,7 +62,10 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         if save.value(forKey: "Purchase") == nil && !launchedBefore{
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             let vc = (self.storyboard?.instantiateViewController(withIdentifier: "premiumVIewController") as! premiumViewController)
-            self.present(vc, animated: true, completion: nil)
+            let vc1 = (self.storyboard?.instantiateViewController(withIdentifier: "walkthroughViewController") as! walkthroughViewController)
+            self.present(vc, animated: true){
+                vc.present(vc1, animated: true, completion: nil)
+            }
         }
         if classArray.count == 0{
         classOutlet.reloadData()
@@ -142,12 +145,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             classOutlet.deleteRows(at: [indexPath], with: .automatic)
             calculateGPA()
         }
-} /*
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let swipeAction = UISwipeActionsConfiguration(actions: [])
-        
-        return swipeAction
-    } */
+} 
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         //EDIT
         let edit = UIContextualAction(style:.normal, title: nil) { (action, view, completionHandler) in

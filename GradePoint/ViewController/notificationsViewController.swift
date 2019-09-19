@@ -11,6 +11,7 @@ import UIKit
 import UserNotifications
 import RealmSwift
 import GoogleMobileAds
+import SwiftEntryKit
 
 var editingIndexPath : IndexPath = IndexPath.init()
 var completedReminderes : Results<Reminder>!
@@ -51,13 +52,6 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         NotificationCenter.default.addObserver(self, selector: #selector( loadList), name:NSNotification.Name(rawValue: "edit"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(presentNotification), name:NSNotification.Name(rawValue: "presentNotification"), object: nil)
-        
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (didAllow, error) in
-            userNotificationsEnabled = didAllow
-            if !userNotificationsEnabled && error != nil{
-                print(error!)
-            }
-        }
         
      vc = self.storyboard?.instantiateViewController(withIdentifier: "calendarViewController") as! bigCalendarViewController
         
@@ -136,7 +130,9 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.notificationImage.isHidden = !cellReminder.willNotify
         cell.notificationImage.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         
-        cell.hasAttachment.isHidden = !cellReminder.hasImage
+         let isHidden = cellReminder.image == nil
+          cell.hasAttachment.isHidden = isHidden
+        
         cell.hasAttachment.tintColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         
         if cellReminder.completed{
@@ -150,7 +146,7 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         if let test = cellReminder.course{
             cell.className.text = test.name
         }else{
-            cell.className.text = Course().name
+            cell.className.text = "No class"
         }
         
         return cell
@@ -283,113 +279,42 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         return 100
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-            let controller = DJSemiModalViewController()
         tableView.deselectRow(at: indexPath, animated: true)
-        
         editingIndexPath = indexPath
+        presentNotificationAtEditingIndex()
         
-        var reminder : Reminder
+    }
+    func presentNotificationAtEditingIndex(){
+        // Create a basic toast that appears at the top
+        var attributes = EKAttributes.bottomFloat
         
-        if(indexPath.section == 0){
-            reminder = reminders[indexPath.row]
-        }
-        else{
-            reminder = completedReminderes[indexPath.row]
-        }
-        controller.title = reminder.name
+        attributes.entryInteraction = .absorbTouches
+        attributes.screenInteraction = .dismiss
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 400))
-        label.numberOfLines = 4
-        //due date
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd, yyyy")
-        var stringDate = dateFormatter.string(from: reminder.due as Date)
-        stringDate = "Due \(stringDate)"
-        //reminder date
-        var stringTime = ""
-        
-        if(reminder.willNotify)
-        {
-            dateFormatter.setLocalizedDateFormatFromTemplate("h:mm a MMMM dd")
-            stringTime = dateFormatter.string(from: reminder.reminder as Date)
-            stringTime = "Will remind on \(stringTime)"
-            
-        }else{
-            stringTime = "No reminders"
-        }
-        //name
-        var stringName = ""
-       if let test = reminder.course{
-            stringName = test.name
-        }else{
-            stringName = Course().name
-        }
-        
-        //completed
-        var stringCompleted = ""
-        if reminder.completed{
-            stringCompleted = "Completed"
-        }else{
-            stringCompleted = "Not completed"
-        }
-        
-        let ray = [stringDate,stringTime,stringName,stringCompleted]
-        
-        var myString = ray[0]
-        for i in 1...ray.count-1{
-            myString = "\(myString)\n\(ray[i])"
-        }
-        
-        myString = "\(myString)\n \(reminder.notes)"
-        
-        let output = NSMutableAttributedString(string: myString)
+        attributes.displayDuration = .infinity
 
-        print(ray)
+        // Set its background to white
+        attributes.entryBackground = .color(color: .standardBackground)
         
-        controller.titleLabel.font = UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.heavy)
+        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .easeOut)
+        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+    
+        attributes.screenBackground = .color(color: EKColor(UIColor(white: 0.0, alpha: 0.5)))
         
-        let paragraphStyle = NSMutableParagraphStyle()
-        
-        paragraphStyle.lineSpacing = 16
-        
-        let myAttribute = [ NSAttributedString.Key.foregroundColor: UIColor.darkGray ]
-        
-        let myAttribute2 = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)]
-        
-        output.addAttributes(myAttribute, range: NSMakeRange(0, output.length))
-        
-        output.addAttributes(myAttribute2, range: NSMakeRange(0, output.length))
-        
-        output.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, output.length))
-        
-        let base = myString
-        let ns = base as NSString
-        var count = 0
-        ns.enumerateLines { (str, _) in
-            count = count + 1
-        }
-        
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.attributedText = output
-        label.textAlignment = .center
-        label.sizeToFit()
-        controller.addArrangedSubview(view: label)
+        attributes.roundCorners = .all(radius: 14)
 
-            globalController = controller
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            button.backgroundColor = #colorLiteral(red: 1, green: 0.6235294118, blue: 0.03921568627, alpha: 1)
-            button.setTitle("View Attatchment", for: .normal)
-            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-            button.clipsToBounds = true
-            button.layer.cornerRadius = 14
-            button.center = self.view.center
-            
-            controller.addArrangedSubview(view: button, height: 40)
-        
-        controller.presentOn(presentingViewController: self, animated: true, onDismiss: { })
+        // Animate in and out using default translation
+        attributes.entranceAnimation = .translation
+        attributes.exitAnimation = .translation
+        let selectView = self.storyboard?.instantiateViewController(withIdentifier: "selectNotificationViewController") as! selectNotificationViewController
+        /*
+        ... Customize the view as you like ...
+        */
+        let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.9)
+        let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
+        attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
+        // Display the view with the configuration
+        SwiftEntryKit.display(entry: selectView, using: attributes)
     }
     @objc func addNotificationPressed(){
         self.performSegue(withIdentifier: "goToCreateReminder", sender: self)
@@ -423,143 +348,9 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     @objc func presentNotification(){
-        
-        
-        print("presenting notifications at \(editingIndexPath)")
-        let controller = DJSemiModalViewController()
-        
-        var reminder = Reminder()
-        if editingIndexPath.section == 0 && reminders.count > 0{
-        reminder = reminders[editingIndexPath.row]
-        }else if editingIndexPath.section == 1 && completedReminderes.count > 0{
-        reminder = completedReminderes[editingIndexPath.row]
-        }
-        
-        controller.title = reminder.name
-        
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 400))
-        label.numberOfLines = 4
-        //due date
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.setLocalizedDateFormatFromTemplate("MMM dd, yyyy")
-        var stringDate = dateFormatter.string(from: reminder.due as Date)
-        stringDate = "Due \(stringDate)"
-        //reminder date
-        var stringTime = ""
-        
-        if(reminder.willNotify)
-        {
-            dateFormatter.setLocalizedDateFormatFromTemplate("h:mm a MMMM dd")
-            stringTime = dateFormatter.string(from: reminder.reminder as Date)
-            stringTime = "Will remind on \(stringTime)"
-            
-        }else{
-            stringTime = "No reminders"
-        }
-        //name
-        var stringName = ""
-        if let test = reminder.course{
-        stringName = test.name
-        }else{
-            stringName = "No Class"
-        }
-
-        
-        //completed
-        var stringCompleted = ""
-        if reminder.completed{
-            stringCompleted = "Completed"
-        }else{
-            stringCompleted = "Not completed"
-        }
-        
-        let ray = [stringDate,stringTime,stringName,stringCompleted]
-        
-        var myString = ray[0]
-        for i in 1...ray.count-1{
-            myString = "\(myString)\n\(ray[i])"
-        }
-        myString = "\(myString)\n \(reminder.notes)"
-        
-        let output = NSMutableAttributedString(string: myString)
-        
-        print(ray)
-        
-        controller.titleLabel.font = UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.heavy)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        
-        paragraphStyle.lineSpacing = 16
-        
-        let myAttribute = [ NSAttributedString.Key.foregroundColor: UIColor.darkGray ]
-        
-        let myAttribute2 = [ NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)]
-        
-        output.addAttributes(myAttribute, range: NSMakeRange(0, output.length))
-        
-        output.addAttributes(myAttribute2, range: NSMakeRange(0, output.length))
-        
-        output.addAttribute(NSAttributedString.Key.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, output.length))
-        let base = myString
-        let ns = base as NSString
-        var count = 0
-        ns.enumerateLines { (str, _) in
-            count = count + 1
-        }
-        
-        label.numberOfLines = count
-        label.attributedText = output
-        label.textAlignment = .center
-        label.lineBreakMode = .byWordWrapping
-        controller.addArrangedSubview(view: label)
-
-            globalController = controller
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            button.backgroundColor = #colorLiteral(red: 1, green: 0.6235294118, blue: 0.03921568627, alpha: 1)
-            button.setTitle("View Attatchment", for: .normal)
-            button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-            button.clipsToBounds = true
-            button.layer.cornerRadius = 14
-            button.center = self.view.center
-            
-            controller.addArrangedSubview(view: button, height: 40)
-        
-        controller.presentOn(presentingViewController: self, animated: true, onDismiss: { })
+        presentNotificationAtEditingIndex()
     }
-    
-    @objc func buttonAction(sender: UIButton!) {
-        globalController.dismiss(animated: true, completion: nil)
-        print("Button tapped at \(editingIndexPath)")
-        var reminder = Reminder()
-        if editingIndexPath.section == 0 && reminders.count > 0{
-            reminder = reminders[editingIndexPath.row]
-        }else if editingIndexPath.section == 1 && completedReminderes.count > 0{
-            reminder = completedReminderes[editingIndexPath.row]
-        }
-        if let data = reminder.image{
-        let image = UIImage(data: data)
-            if image != nil{
-        presentImage(img: image!)
-            }else{
-                ProgressHUD.showError("No Image Found")
-            }
-        }else{
-           ProgressHUD.showError("No Image Found")
-        }
-    }
-    func presentImage(img : UIImage){
-        print("Presenting Image Attachment")
-        // 1. create SKPhoto Array from UIImage
-        var images = [SKPhoto]()
-        let photo = SKPhoto.photoWithImage(img)// add some UIImage
-        images.append(photo)
-        
-        // 2. create PhotoBrowser Instance, and present from your viewController.
-        let browser = SKPhotoBrowser(photos: images)
-        browser.initializePageIndex(0)
-        present(browser, animated: true, completion: {})
-    }
+   
     /*
     // MARK: - Navigation
 

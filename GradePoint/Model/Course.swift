@@ -28,11 +28,11 @@ class oldCourse : Object, Codable{
     func getGradeColor() -> UIColor{
         switch grade{
         case "A+","A","A-","B+","B":
-            return UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+            return .systemGreen
         case "B-", "C+", "C", "C-":
-            return UIColor(red: 255/255, green: 204/255, blue: 0/255, alpha: 1)
+            return .systemYellow
         case "D+","D","D-","F":
-            return UIColor(red: 255/255, green: 59/255, blue: 48/255, alpha: 1)
+            return .systemRed
         default:
             break
         }
@@ -44,6 +44,7 @@ class Course : oldCourse{
     var syllabusArray : List<SyllabusItem> = List<SyllabusItem>()
     @objc dynamic var useCalculatedGrade = false
     @objc dynamic var goalPercent : Int = -1
+    @objc dynamic var realmWillDelete = false
 }
 
 

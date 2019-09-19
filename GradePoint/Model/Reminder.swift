@@ -33,7 +33,6 @@ class Reminder: oldReminder{
     
     @objc dynamic var image : Data?
     
-    @objc dynamic var hasImage = false
     func initReminder(reminderName : String, isCompleted: Bool, dueDate: NSDate, newCourse: Course, remindOn: NSDate){
         name = reminderName
         

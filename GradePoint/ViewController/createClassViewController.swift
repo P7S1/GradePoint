@@ -239,7 +239,7 @@ class createClassViewController: UIViewController, UIPickerViewDataSource, UIPic
     func presentAd(){
         let save = UserDefaults.standard
         adCount = adCount + 1
-        if interstitial.isReady && adCount % 3 == 0 && save.value(forKey: "Purchase") == nil{
+        if interstitial.isReady && adCount % 4 == 0 && save.value(forKey: "Purchase") == nil{
             interstitial.present(fromRootViewController: self)
             print("ad was ready")
         } else {

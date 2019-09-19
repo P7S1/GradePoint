@@ -57,29 +57,33 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
         
         let c1 = howItWorksCard()
         //red
-        c1.initCard(i: UIImage(named: "c1")!, c: UIColor(red: 1, green: 59/255, blue: 48/255, alpha: 0.7).cgColor, t: "Most American schools use the 4.0 grading format, in which letter grades are converted into values")
+        c1.initCard(i: UIImage(named: "c1")!, c: UIColor.systemRed.withAlphaComponent(00.7).cgColor, t: "Most American schools use the 4.0 grading format, in which letter grades are converted into values")
         cards.append(c1)
         
         let c2 = howItWorksCard()
         //green
-        c2.initCard(i: UIImage(named: "c2")!, c: UIColor(red: 52/255, green: 199/255, blue: 89/255, alpha: 0.7).cgColor, t: "For most schools, those standard values are A = 4.0, B = 3.0, C = 2.0, D = 1.0, and F = 0 ")
+        c2.initCard(i: UIImage(named: "c2")!, c: UIColor.systemGreen.withAlphaComponent(0.7).cgColor, t: "For most schools, those standard values are A = 4.0, B = 3.0, C = 2.0, D = 1.0, and F = 0 ")
         cards.append(c2)
         
         let c3 = howItWorksCard()
         //blue
-        c3.initCard(i: UIImage(named: "c3")!, c: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.7).cgColor, t: "This app works by totaling all the corresponding values for each letter grade, then dividing that by the total number of credits ")
+        c3.initCard(i: UIImage(named: "c3")!, c: UIColor.systemBlue.withAlphaComponent(0.7).cgColor, t: "This app works by totaling all the corresponding values for each letter grade, then dividing that by the total number of credits ")
         cards.append(c3)
         //purple
         let c4 = howItWorksCard()
-        c4.initCard(i: UIImage(named: "c4")!, c: UIColor(red: 175/255, green: 82/255, blue: 222/255, alpha: 0.7).cgColor, t: "That's how GPA is calculated! just remember: letter value sum / points value sum = GPA")
+        c4.initCard(i: UIImage(named: "c4")!, c: UIColor.systemPurple.withAlphaComponent(0.7).cgColor, t: "That's how GPA is calculated! just remember: letter value sum / points value sum = GPA")
         cards.append(c4)
         //indigo
         let c5 = howItWorksCard()
-        c5.initCard(i: UIImage(named: "c5")!, c: UIColor(red: 88/255, green: 86/255, blue: 214/255, alpha: 0.7).cgColor, t: "Some higher level classes such as Honors or AP have special weights to them due to the increased difficulty of the course. Those weights can vary depending on the difficulty of the course.")
+        var color = UIColor(red: 88/255, green: 86/255, blue: 214/255, alpha: 0.7).cgColor
+        if #available(iOS 13.0, *) {
+            color = UIColor.systemIndigo.withAlphaComponent(0.7).cgColor
+        }
+        c5.initCard(i: UIImage(named: "c5")!, c: color, t: "Some higher level classes such as Honors or AP have special weights to them due to the increased difficulty of the course. Those weights can vary depending on the difficulty of the course.")
         cards.append(c5)
         //pink
         let c6 = howItWorksCard()
-        c6.initCard(i: UIImage(named: "c6")!, c: UIColor(red: 1, green: 45/255, blue: 85/255, alpha: 0.7).cgColor, t: "Weights make corresponding letter values  higher than the standard. For example, an A in a standard weight class is 4.0 but an A in a Honors class is 4.5")
+        c6.initCard(i: UIImage(named: "c6")!, c: UIColor.systemPink.withAlphaComponent(0.7).cgColor, t: "Weights make corresponding letter values  higher than the standard. For example, an A in a standard weight class is 4.0 but an A in a Honors class is 4.5")
         cards.append(c6)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,8 +106,8 @@ class howItWorksViewController: UIViewController,UICollectionViewDataSource,UISc
         
         cell.layer.shadowColor = UIColor.gray.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        cell.layer.shadowRadius = 2.5
-        cell.layer.shadowOpacity = 1.0
+        cell.layer.shadowRadius = 12
+        cell.layer.shadowOpacity = 0.7
         cell.layer.masksToBounds = false
         cell.layer.shadowPath = UIBezierPath(roundedRect:cell.bounds, cornerRadius:cell.contentView.layer.cornerRadius).cgPath
         

@@ -20,6 +20,11 @@ class classesTableViewCell: UITableViewCell {
         class_Background.layer.cornerRadius = 10;
         class_Background.layer.masksToBounds = true;
         
+        class_Background.layer.shadowColor = UIColor.gray.cgColor
+        class_Background.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        class_Background.layer.shadowRadius = 12.0
+        class_Background.layer.shadowOpacity = 0.7
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
