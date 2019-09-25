@@ -74,6 +74,7 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         self.navBar.isTranslucent = false
         
        self.navItem.title = "Assignments"
+        reminderOutlet.allowsSelection = true
         
         
                 // Do any additional setup after loading the view.
@@ -104,7 +105,6 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         isHidden.isHidden = reminders.count != 0 || completedReminderes.count != 0
         print(reminders.count != 0 && completedReminderes.count != 0)
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reminderCell", for: indexPath) as! remindersTableViewCell
@@ -137,11 +137,11 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
         
         if cellReminder.completed{
             cell.completedText.text = "Completed"
-            cell.completedText.textColor = #colorLiteral(red: 0.2352941176, green: 1, blue: 0.3333333333, alpha: 1)
+            cell.completedText.textColor = .systemGreen
         }
         else{
             cell.completedText.text = "Not Completed"
-            cell.completedText.textColor = #colorLiteral(red: 1, green: 0.3098039216, blue: 0.2666666667, alpha: 1)
+            cell.completedText.textColor = .systemRed
         }
         if let test = cellReminder.course{
             cell.className.text = test.name
@@ -155,6 +155,11 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if reminders.count == 0 && completedReminderes.count == 0{
+            tableView.setEmptyView(title: "No Assignments", message: "Press the orange plus at the top right to add some")
+        }else{
+            tableView.restore()
+        }
         if(section == 0)
         {
         return reminders.count
@@ -205,7 +210,7 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
             ProgressHUD.showSuccess("Completed")
             
         }
-        edit.backgroundColor = #colorLiteral(red: 0.1176470588, green: 0.7647058824, blue: 0.2156862745, alpha: 1)
+            edit.backgroundColor = .systemGreen
         edit.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "complete")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
@@ -241,22 +246,42 @@ class notificationsViewController: UIViewController, UITableViewDelegate, UITabl
             completionHandler(true)
             print("user is editing a cell")
         }
-        edit2.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.5450980392, blue: 0, alpha: 1)
+        edit2.backgroundColor = .systemOrange
         edit2.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "edit")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
         return UISwipeActionsConfiguration(actions: [edit2,edit])
     }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "groupHeader") as! headerViewCell
-        if(section == 0)
-        {
-        cell.headerText.text = "Ongoing"
-        }else{
-        cell.headerText.text = "Completed"
-        }
-        return cell.contentView
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+         
+        
+             headerView.backgroundColor = .clear
+         
+
+         let label = UILabel()
+         label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+         if section == 0{
+          label.text = "ONGOING"
+         }else if section == 1{
+             label.text = "COMPLETED"
+         }
+         label.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+         if #available(iOS 13.0, *) {
+             label.textColor = .darkGray
+         } else {
+             label.textColor = .darkGray
+             // Fallback on earlier versions
+         } // my custom colour
+
+         headerView.addSubview(label)
+
+         return headerView
+    }
+    
 
     @IBAction func switchAction(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{

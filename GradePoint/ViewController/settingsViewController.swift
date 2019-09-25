@@ -30,21 +30,18 @@ class settingViewController : UITableViewController{
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
         
-        if #available(iOS 13.0, *) {
-            headerView.backgroundColor = .systemBackground
-        } else {
-            // Fallback on earlier versions
-            headerView.backgroundColor = .white
-        }
+       
+            headerView.backgroundColor = .clear
+        
 
         let label = UILabel()
         label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
         if section == 1{
          label.text = "GENERAL"
         }else if section == 2{
-            label.text = "SUPPORT"
+            label.text = "LEGAL"
         }else{
-          label.text = "LEGAL"
+          label.text = "SUPPORT"
         }
         label.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
         if #available(iOS 13.0, *) {

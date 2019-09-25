@@ -48,8 +48,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             realm.delete(realm.objects(Course.self).filter("realmWillDelete == true"))
         }
         
-        
+        let navigationBarAppearace = UINavigationBar.appearance()
 
+        navigationBarAppearace.tintColor = .systemOrange
+        if #available(iOS 13.0, *) {
+            navigationBarAppearace.barTintColor = .secondarySystemGroupedBackground
+        } else {
+            navigationBarAppearace.barTintColor = UIColor.white
+            // Fallback on earlier versions
+        }
+
+        // change navigation item title color
+        if #available(iOS 13.0, *) {
+            navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.secondaryLabel]
+        } else {
+            navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.darkGray]
+            // Fallback on earlier versions
+        }
+        
+        if #available(iOS 13.0, *) {
+            ProgressHUD.statusColor(.label)
+        }
         return true
     }
 
@@ -194,7 +213,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
             // version (if you've never set a schema version before, the version is 0).
-            schemaVersion: 7,
+            schemaVersion: 8,
             
             // Set the block which will be called automatically when opening a Realm with
             // a schema version lower than the one set above
@@ -284,4 +303,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
 

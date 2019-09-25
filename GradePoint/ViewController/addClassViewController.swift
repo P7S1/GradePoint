@@ -23,8 +23,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     var globalGPA = 0.000
     var globalUnweightedGPA = 0.000
     
-    @IBOutlet weak var isEmpty: UILabel!
-    
     @IBOutlet weak var classOutlet: UITableView!
     
     @IBOutlet weak var gpaText: UILabel!
@@ -38,6 +36,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         
         classOutlet.delegate = self
         classOutlet.dataSource = self
+        classOutlet.allowsSelection = true
         NotificationCenter.default.addObserver(self, selector: #selector( loadList), name:NSNotification.Name(rawValue: "load"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(unDimScreen), name:NSNotification.Name(rawValue: "unDimScreen"), object: nil)
@@ -46,7 +45,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         
        reloadData()
         
-                isEmpty.isHidden = classArray.count != 0
         
         // Do any additional setup after loading the view.
     }
@@ -86,6 +84,11 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     //TODO: TABLE VIEW
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if classArray.isEmpty{
+            tableView.setEmptyView(title: "You Have No Classes", message: "Press the gray plus in the bottom to add some!")
+        }else{
+            tableView.restore()
+        }
         return classArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,16 +112,13 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.class_Grade.textColor = UIColor.lightGray
         }
         
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         print("added to table")
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 90
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
-        cell.backgroundColor = UIColor.clear
         cell.alpha = 0
         UIView.animate(withDuration: 0.3)
         {
@@ -154,7 +154,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             editingIndex = indexPath.row
             print("sending user to editing screen with index of \(indexPath.row)")
             self.dimScreen()
-            self.classOutlet.setEditing(false, animated: true)
             
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "createView") as! createClassViewController
             vc.modalPresentationStyle = .overCurrentContext
@@ -164,8 +163,8 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
             editingIndexPath = indexPath
             self.performSegue(withIdentifier: "goToCalculateGrade", sender: self)
         }
-        calc.backgroundColor = #colorLiteral(red: 0.1568627451, green: 0.8039215686, blue: 0.2549019608, alpha: 1)
-        edit.backgroundColor = #colorLiteral(red: 1, green: 0.662745098, blue: 0.07843137255, alpha: 1)
+        calc.backgroundColor = .systemGreen
+        edit.backgroundColor = .systemOrange
         calc.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
             UIImage(named: "calc")?.draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
@@ -174,9 +173,35 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         return UISwipeActionsConfiguration(actions: [edit,calc])
     }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+         
+        
+             headerView.backgroundColor = .clear
+         
+
+         let label = UILabel()
+         label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+         if section == 0{
+          label.text = "CLASSES"
+         }
+         label.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+         if #available(iOS 13.0, *) {
+             label.textColor = .darkGray
+         } else {
+             label.textColor = .darkGray
+             // Fallback on earlier versions
+         } // my custom colour
+
+         headerView.addSubview(label)
+
+         return headerView
+    }
     //TODO: CALCULATE GPA
     func calculateGPA(){
-        isEmpty.isHidden = classArray.count != 0
         var points = 0.0
         var creditsSum = 0.0
         var unweightedPoints = 0.0
@@ -220,11 +245,7 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     //TODO: RELOAD ALL DATA
     func reloadData(){
-        classOutlet.rowHeight = UITableView.automaticDimension
-        classOutlet.estimatedRowHeight = 200.0
         classOutlet.reloadData()
-        classOutlet.separatorStyle = .none
-        isEmpty.isHidden = classArray.count != 0
         calculateGPA()
     }
     @objc func unDimScreen(){
@@ -256,8 +277,6 @@ class addClassViewController: UIViewController, UITableViewDataSource, UITableVi
         classOutlet.endUpdates()
         }
         unDimScreen()
-        classOutlet.layer.cornerRadius = 10
-        classOutlet.layer.masksToBounds = true
         calculateGPA()
         }
         

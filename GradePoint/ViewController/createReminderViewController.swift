@@ -24,6 +24,7 @@ class createReminderViewController: FormViewController, GADInterstitialDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-7404153809143887/4126432796")
         //ca-app-pub-3940256099942544/4411468910
         let request = GADRequest()

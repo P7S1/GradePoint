@@ -82,7 +82,39 @@ class bigCalendarViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     //TODO: Table view
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+         
+        
+             headerView.backgroundColor = .clear
+         
+
+         let label = UILabel()
+         label.frame = CGRect.init(x: 5, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
+         if section == 0{
+          label.text = "REMINDERS"
+         }
+         label.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+         if #available(iOS 13.0, *) {
+             label.textColor = .darkGray
+         } else {
+             label.textColor = .darkGray
+             // Fallback on earlier versions
+         } // my custom colour
+
+         headerView.addSubview(label)
+
+         return headerView
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if calendarReminders.count == 0{
+            tableView.setEmptyView(title: "No Assignments This Day :)", message: "Try selecting another day")
+        }else{
+            tableView.restore()
+        }
         return calendarReminders.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -114,11 +146,11 @@ class bigCalendarViewController: UIViewController, UITableViewDelegate, UITableV
         }
         if cellReminder.completed{
             cell.completedText.text = "Completed"
-            cell.completedText.textColor = #colorLiteral(red: 0.2352941176, green: 1, blue: 0.3333333333, alpha: 1)
+            cell.completedText.textColor = .systemGreen
         }
         else{
             cell.completedText.text = "Not Completed"
-            cell.completedText.textColor = #colorLiteral(red: 1, green: 0.3098039216, blue: 0.2666666667, alpha: 1)
+            cell.completedText.textColor = .systemRed
         }
        if let test = cellReminder.course{
            cell.className.text = test.name
